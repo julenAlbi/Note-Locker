@@ -25,8 +25,6 @@ class KeyStoreManager(private val context: Context) {
     private val keyStore = createAndroidKeyStore()
 
 
-
-
     private fun createAndroidKeyStore(): KeyStore {
         val keyStore = KeyStore.getInstance(KEY_STORE_NAME)
         keyStore.load(null)

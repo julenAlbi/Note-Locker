@@ -2,6 +2,7 @@ package com.example.julen.nativeappsproject.encription
 
 import android.content.Context
 import android.os.Build
+import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 

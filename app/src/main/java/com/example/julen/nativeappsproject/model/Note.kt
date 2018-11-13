@@ -1,7 +1,5 @@
-package com.example.julen.nativeappsproject.domain
+package com.example.julen.nativeappsproject.model
 
-import android.os.Parcel
-import android.os.Parcelable
 import java.util.*
 import java.io.Serializable
 
