@@ -40,7 +40,8 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val note = notes[position]
         holder.name.text = note.alias
-        holder.lastEditedDate.text = note.updateDate.toString()
+        holder.lastEditedDate.text = note.updateDate.toString("dd/mm/yyyy")
+        holder.createdDate.text = note.createDate.toString("dd/mm/yyyy")
         //is locked?
         if (note.locked) {
             holder.locked.visibility = View.VISIBLE
@@ -61,6 +62,7 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.NoteTitle
         val lastEditedDate: TextView = view.LastEditedDate
+        val createdDate: TextView = view.CreatedDate
         val locked: TextView = view.lockedIcon
         val unlocked: TextView = view.unlockedIcon
     }

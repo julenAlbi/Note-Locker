@@ -8,6 +8,7 @@ import com.example.julen.nativeappsproject.model.Note
 
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
+import org.joda.time.DateTime
 import java.util.*
 
 class NoteListActivity : AppCompatActivity() {
@@ -35,9 +36,9 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun getFakeNotes(): List<Note>? {
         val noteList = mutableListOf<Note>()
-        noteList.add(Note("pasahitzak", "iupsiub:fudayby", Date(), Date(), true))
-        noteList.add(Note("sekretuek", "ouygouydvsoytvsodvtsdp", Date(), Date(), true))
-        noteList.add(Note("beste sekretue", "byfofue fdouyav wpuey", Date(), Date(), false))
+        noteList.add(Note("pasahitzak", "iupsiub:fudayby", DateTime.now(), DateTime.now(), true))
+        noteList.add(Note("sekretuek", "ouygouydvsoytvsodvtsdp", DateTime.now(), DateTime.now(), true))
+        noteList.add(Note("beste sekretue", "byfofue fdouyav wpuey", DateTime.now(), DateTime.now(), false))
         return noteList
     }
 
