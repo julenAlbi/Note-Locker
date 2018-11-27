@@ -35,9 +35,9 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun getFakeNotes(): List<Note>? {
         val noteList = mutableListOf<Note>()
-        noteList.add(Note("pasahitzak", "iupsiub:fudayby", Date(), Date()))
-        noteList.add(Note("sekretuek", "ouygouydvsoytvsodvtsdp", Date(), Date()))
-        noteList.add(Note("beste sekretue", "byfofue fdouyav wpuey", Date(), Date()))
+        noteList.add(Note("pasahitzak", "iupsiub:fudayby", Date(), Date(), true))
+        noteList.add(Note("sekretuek", "ouygouydvsoytvsodvtsdp", Date(), Date(), true))
+        noteList.add(Note("beste sekretue", "byfofue fdouyav wpuey", Date(), Date(), false))
         return noteList
     }
 

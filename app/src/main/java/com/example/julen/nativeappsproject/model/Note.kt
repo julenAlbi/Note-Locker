@@ -5,6 +5,6 @@ import java.io.Serializable
 
 data class Note(val alias: String,
                 val secret: String,
-                val createDate: Date,
-                val updateDate: Date,
-                val locked: Boolean) : Serializable
+                val createDate: Date = Date(),
+                val updateDate: Date = Date(),
+                val locked: Boolean = false) : Serializable
