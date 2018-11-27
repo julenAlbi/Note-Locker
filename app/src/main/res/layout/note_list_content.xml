@@ -32,7 +32,7 @@
         android:layout_gravity="top|right"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/fasolid900"
-        android:text="\uf09c"
+        android:text="\uf3c1"
         android:textSize="20sp"
         tools:visibility="visible" />
 

@@ -42,9 +42,12 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
         holder.name.text = note.alias
         holder.lastEditedDate.text = note.updateDate.toString()
         //is locked?
-        if (true) {
+        if (note.locked) {
             holder.locked.visibility = View.VISIBLE
             holder.unlocked.visibility = View.INVISIBLE
+        }else{
+            holder.locked.visibility = View.INVISIBLE
+            holder.unlocked.visibility = View.VISIBLE
         }
 
         with(holder.itemView) {
