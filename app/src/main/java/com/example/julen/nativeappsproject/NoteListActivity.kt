@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
+import com.example.julen.nativeappsproject.extensions.startNoteActivity
 import com.example.julen.nativeappsproject.model.Note
 
 import kotlinx.android.synthetic.main.activity_note_list.*
@@ -31,6 +32,9 @@ class NoteListActivity : AppCompatActivity() {
         toolbar.title = title
         note_list.adapter = NoteListAdapter(this, notes!!, twoPane)
         note_list.layoutManager = LinearLayoutManager(this)
+        (note_list.adapter as NoteListAdapter).showNoteActivity = { note ->
+            startNoteActivity(note)
+        }
 
     }
 

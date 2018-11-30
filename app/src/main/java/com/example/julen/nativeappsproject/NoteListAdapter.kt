@@ -1,11 +1,13 @@
 package com.example.julen.nativeappsproject
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.julen.nativeappsproject.extensions.startNoteActivity
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.note_list_content.view.*
 import kotlinx.android.synthetic.main.note_list_content.*
@@ -16,8 +18,8 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
         RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
-    private var showNoteFragment: ((note: Note) -> Unit)? = null
-    private var showNoteActivity: ((note: Note) -> Unit)? = null
+    var showNoteFragment: ((note: Note) -> Unit)? = null
+    var showNoteActivity: ((note: Note) -> Unit)? = null
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -52,7 +54,7 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
         }
 
         with(holder.itemView) {
-            tag = note // Save the comic represented by this view
+            tag = note // Save the note represented by this view
             setOnClickListener(onClickListener)
         }
     }
