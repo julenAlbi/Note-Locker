@@ -19,16 +19,12 @@ class EncriptionServices(private val context: Context) {
     private val keyStoreManager = KeyStoreManager(context)
     private val storage = SharedPreferencesManager(context)
 
-    fun createAppPassword(password: String) {
-        /*
-        Create key for encript password.
-        first encript password and store it in the sahredpreferences.
-         */
-        createMasterKey()
-
-    }
-
-    fun createMasterKey(keyPassword: String? = null) {
+    /**
+     * Creates a master key depending on the android version. If Android 23+ API, ti will create a symmetric key in
+     * androidKeyStore, else it will create android a asymmetric key in the androidKeyStoer, and with that key it will encrypt
+     * another symmetric key created with defalut java provider.
+     */
+    fun createMasterKey() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             createAndroidSymmetricKey()
         }else{
