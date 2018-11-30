@@ -7,4 +7,5 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="title_activity_note_list">Your notes</string>
+    <string name="title_activity_note">NoteActivity</string>
 </resources>
