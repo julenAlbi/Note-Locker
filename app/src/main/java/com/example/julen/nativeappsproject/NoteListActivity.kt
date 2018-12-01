@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
+import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
+import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
 import com.example.julen.nativeappsproject.model.Note
+import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
@@ -41,7 +44,14 @@ class NoteListActivity : AppCompatActivity() {
         note_list.adapter = NoteListAdapter(this, notes!!, twoPane)
         note_list.layoutManager = LinearLayoutManager(this)
         (note_list.adapter as NoteListAdapter).showNoteActivity = { note ->
-            startNoteActivity(note)
+            if(note.locked){
+                val authDialog = AuthenticationDialog()
+                authDialog.passwordVerificationListener = {validatePassword(it)}
+                authDialog.authenticationSuccessListener = {startNoteActivity(note)}
+                authDialog.show(supportFragmentManager, "Authenticate")
+            }else{
+                startNoteActivity(note)
+            }
         }
         (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->
             val fragment = NoteFragment.newInstance(note)
@@ -51,6 +61,14 @@ class NoteListActivity : AppCompatActivity() {
                     .commit()
         }
 
+    }
+
+    /**
+     * Validate password inputted from Authentication Dialog.
+     */
+    private fun validatePassword(inputPassword: String): Boolean {
+        val sharedPreferencesManager= SharedPreferencesManager(this)
+        return EncryptionServices(applicationContext).decrypt(sharedPreferencesManager.getPassword()) == inputPassword
     }
 
     private fun getFakeNotes(): List<Note>? {

@@ -2,8 +2,9 @@ package com.example.julen.nativeappsproject
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import com.example.julen.nativeappsproject.encription.EncriptionServices
+import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startHomeActivity
 import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import kotlinx.android.synthetic.main.signup_activity.*
@@ -35,11 +36,9 @@ class SignUpActivity : AppCompatActivity() {
         var confirmpassword = confirmpasswordText.text.toString()
 
         if(password.equals(confirmpassword)){
-            var es = EncriptionServices(this)
-            es.createMasterKey()
+            var es = EncryptionServices(applicationContext)
 
-
-            var encryptedPassword = with(EncriptionServices(this)){
+            var encryptedPassword = with(es){
                 createMasterKey()
                 encrypt(password)
             }

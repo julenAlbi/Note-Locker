@@ -2,11 +2,12 @@ package com.example.julen.nativeappsproject.encription
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
-class EncriptionServices(private val context: Context) {
+class EncryptionServices(private val context: Context) {
     /**
      * The place to keep all constants.
      */
@@ -47,7 +48,7 @@ class EncriptionServices(private val context: Context) {
         storage.saveEncryptionKey(encryptedSymmetricKey)
     }
 
-    fun encrypt(data: String, keyPassword: String? = null): String {
+    fun encrypt(data: String): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             encryptWithAndroidSymmetricKey(data)
         } else {
@@ -55,7 +56,7 @@ class EncriptionServices(private val context: Context) {
         }
     }
 
-    fun decrypt(data: String, keyPassword: String? = null): String {
+    fun decrypt(data: String): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decryptWithAndroidSymmetricKey(data)
         } else {
@@ -65,25 +66,27 @@ class EncriptionServices(private val context: Context) {
 
     private fun encryptWithAndroidSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreSymmetricKey(MASTER_KEY)
-        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).encrypt(data, masterKey)
+        Log.d("TAG", masterKey.toString())
+        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).encrypt(data, masterKey, true)
     }
 
     private fun decryptWithAndroidSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreSymmetricKey(MASTER_KEY)
-        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).decrypt(data, masterKey)
+        Log.d("TAG", masterKey.toString())
+        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).decrypt(data, masterKey, true)
     }
 
     private fun encryptWithDefaultSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreAsymmetricKeyPair(MASTER_KEY)
         val encryptionKey = storage.getEncryptionKey()
         val symmetricKey = CipherManager(CipherManager.TRANSFORMATION_ASYMMETRIC).unWrapKey(encryptionKey, ALGORITHM_AES, Cipher.SECRET_KEY, masterKey?.private) as SecretKey
-        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).encrypt(data, symmetricKey)
+        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).encrypt(data, symmetricKey, true)
     }
 
     private fun decryptWithDefaultSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreAsymmetricKeyPair(MASTER_KEY)
         val encryptionKey = storage.getEncryptionKey()
         val symmetricKey = CipherManager(CipherManager.TRANSFORMATION_ASYMMETRIC).unWrapKey(encryptionKey, ALGORITHM_AES, Cipher.SECRET_KEY, masterKey?.private) as SecretKey
-        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).decrypt(data, symmetricKey)
+        return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).decrypt(data, symmetricKey, true)
     }
 }
