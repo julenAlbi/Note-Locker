@@ -27,6 +27,14 @@ class NoteListActivity : AppCompatActivity() {
             TODO("Add new note.")
         }
 
+        if (noteFrame != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-w900dp).
+            // If this view is present, then the
+            // activity should be in two-pane mode.
+            twoPane = true
+        }
+
         notes = getFakeNotes()
 
         toolbar.title = title
@@ -34,6 +42,13 @@ class NoteListActivity : AppCompatActivity() {
         note_list.layoutManager = LinearLayoutManager(this)
         (note_list.adapter as NoteListAdapter).showNoteActivity = { note ->
             startNoteActivity(note)
+        }
+        (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->
+            val fragment = NoteFragment.newInstance(note)
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.noteFrame, fragment)
+                    .commit()
         }
 
     }
