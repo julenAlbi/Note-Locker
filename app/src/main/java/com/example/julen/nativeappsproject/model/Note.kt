@@ -3,8 +3,8 @@ package com.example.julen.nativeappsproject.model
 import org.joda.time.DateTime
 import java.io.Serializable
 
-data class Note(val alias: String,
-                val secret: String,
+data class Note(var alias: String,
+                var secret: String,
                 val createDate: DateTime = DateTime.now(),
-                val updateDate: DateTime = DateTime.now(),
-                val locked: Boolean = false) : Serializable
+                var updateDate: DateTime = DateTime.now(),
+                var locked: Boolean = false) : Serializable

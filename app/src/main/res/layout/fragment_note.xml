@@ -66,7 +66,7 @@
             android:background="@drawable/back"
             android:ems="10"
             android:gravity="top"
-            android:inputType="none"
+            android:inputType="textMultiLine"
             android:padding="10dp" />
     </LinearLayout>
 </FrameLayout>
