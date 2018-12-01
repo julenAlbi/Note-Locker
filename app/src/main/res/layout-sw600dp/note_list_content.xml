@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="@dimen/recycler_layout_spacing">
+
+    <TextView
+        android:id="@+id/NoteTitle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/lockedIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fasolid900"
+        android:text="\uf023"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/unlockedIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fasolid900"
+        android:text="\uf3c1"
+        android:textSize="20sp"
+        tools:visibility="visible" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/CreatedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:attr/listPreferredItemPaddingLeft"
+            android:text="TextView"
+            tools:text="@tools:sample/date/ddmmyy" />
+        <TextView
+            android:id="@+id/LastEditedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:attr/listPreferredItemPaddingLeft"
+            android:text="TextView"
+            tools:text="@tools:sample/date/ddmmyy" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"
+        android:layout_gravity="bottom"/>
+
+
+</FrameLayout>
