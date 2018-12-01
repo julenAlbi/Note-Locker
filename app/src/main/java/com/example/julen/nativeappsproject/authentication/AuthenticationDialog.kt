@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.dialogfragment.*
  * This class will display a authentication dialog.
  */
 
-class AuthenticationDialog : AppCompatDialogFragment() {
+class AuthenticationDialog() : AppCompatDialogFragment() {
 
     //This lambda function contains a function to verify the password.
     var passwordVerificationListener: ((password : String) -> Boolean)? = null

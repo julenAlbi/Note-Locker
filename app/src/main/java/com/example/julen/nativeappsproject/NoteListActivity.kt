@@ -54,13 +54,26 @@ class NoteListActivity : AppCompatActivity() {
             }
         }
         (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->
-            val fragment = NoteFragment.newInstance(note)
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.noteFrame, fragment)
-                    .commit()
-        }
 
+            if(note.locked){
+                val authDialog = AuthenticationDialog()
+                authDialog.passwordVerificationListener = {validatePassword(it)}
+                authDialog.authenticationSuccessListener = {
+                    val fragment = NoteFragment.newInstance(note)
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.noteFrame, fragment)
+                            .commit()
+                }
+                authDialog.show(supportFragmentManager, "Authenticate")
+            }else {
+                val fragment = NoteFragment.newInstance(note)
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.noteFrame, fragment)
+                        .commit()
+            }
+        }
     }
 
     /**
