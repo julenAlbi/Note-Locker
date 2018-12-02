@@ -2,9 +2,9 @@ package com.example.julen.nativeappsproject
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.*
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.fragment_add_note.view.*
 
@@ -15,8 +15,10 @@ class AddNoteFragment : Fragment() {
      */
     private var note: Note? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true);
 
         arguments?.let {
             if (it.containsKey(NoteFragment.ARG_NOTE)) {
@@ -25,7 +27,22 @@ class AddNoteFragment : Fragment() {
                 note = it.getSerializable(NoteFragment.ARG_NOTE) as Note
             }
         }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.action_save -> {
+                Log.d("DEBUGGIN","Save_action item selected.")
+                saveNote()
+                return true
+            }
+        }
+        Log.d("DEBUGGIN","Bad itemselected.")
+        return false
+    }
+
+    private fun saveNote() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**

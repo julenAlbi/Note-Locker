@@ -3,6 +3,7 @@ package com.example.julen.nativeappsproject
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
@@ -19,6 +20,8 @@ class NoteListActivity : AppCompatActivity() {
 
     private var notes: List<Note>? = null
 
+    private var twoPaneMode: String? =  null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
@@ -26,6 +29,7 @@ class NoteListActivity : AppCompatActivity() {
 
         addSecretButton.setOnClickListener {
             if(twoPane){
+                twoPaneMode = NoteActivity.ADD_EDIT
                 val fragment = AddNoteFragment.newInstance()
                 supportFragmentManager
                         .beginTransaction()
@@ -61,6 +65,7 @@ class NoteListActivity : AppCompatActivity() {
         }
         (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->
 
+            twoPaneMode = NoteActivity.VIEW_NOTE
             if(note.locked){
                 val authDialog = AuthenticationDialog()
                 authDialog.passwordVerificationListener = {validatePassword(it)}
@@ -80,6 +85,21 @@ class NoteListActivity : AppCompatActivity() {
                         .commit()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        twoPaneMode?.let {
+            menuInflater.inflate(R.menu.note_menu,menu)
+            if(it.equals(NoteActivity.ADD_EDIT)){
+                menu?.findItem(R.id.action_save)?.isVisible = true
+                menu?.findItem(R.id.action_edit)?.isVisible = false
+            }else{
+                menu?.findItem(R.id.action_edit)?.isVisible = true
+                menu?.findItem(R.id.action_save)?.isVisible = false
+            }
+            return true
+        }
+        return false //return false if nothing is done
     }
 
     /**
