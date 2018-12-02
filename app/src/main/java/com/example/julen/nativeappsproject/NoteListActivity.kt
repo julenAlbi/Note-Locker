@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
@@ -26,8 +27,16 @@ class NoteListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_note_list)
         setSupportActionBar(toolbar)
 
-        addSecretButton.setOnClickListener { view ->
-            TODO("Add new note.")
+        addSecretButton.setOnClickListener {
+            if(twoPane){
+                val fragment = addNoteFragment.newInstance()
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.noteFrame, fragment)
+                        .commit()
+            }else{
+                startNoteActivity(mode = NoteActivity.ADD_EDIT)
+            }
         }
 
         if (noteFrame != null) {
@@ -47,10 +56,10 @@ class NoteListActivity : AppCompatActivity() {
             if(note.locked){
                 val authDialog = AuthenticationDialog()
                 authDialog.passwordVerificationListener = {validatePassword(it)}
-                authDialog.authenticationSuccessListener = {startNoteActivity(note)}
+                authDialog.authenticationSuccessListener = {startNoteActivity(note, NoteActivity.VIEW_NOTE)}
                 authDialog.show(supportFragmentManager, "Authenticate")
             }else{
-                startNoteActivity(note)
+                startNoteActivity(note, NoteActivity.VIEW_NOTE)
             }
         }
         (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->

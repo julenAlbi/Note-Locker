@@ -16,12 +16,12 @@ class addNoteFragment : Fragment() {
     /**
      * The note this fragment is representing
      */
-    private lateinit var note: Note
+    private var note: Note? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments!!.let {
+        arguments?.let {
             if (it.containsKey(NoteFragment.ARG_NOTE)) {
                 // Load the note specified by the fragment
                 // arguments.

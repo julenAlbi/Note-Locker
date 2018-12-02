@@ -17,12 +17,15 @@ fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java)
 
 fun Activity.startSignUpActivity() = startActivity(SignUpActivity::class.java)
 
-fun Activity.startNoteActivity(note : Note) = startActivity(NoteActivity::class.java, note)
+fun Activity.startNoteActivity(note : Note? = null, mode : String) = startActivity(NoteActivity::class.java, note, mode)
 
-private fun Activity.startActivity(cls: Class<*>, note : Note? = null) {
+private fun Activity.startActivity(cls: Class<*>, note : Note? = null, mode: String? = null) {
     val intent = Intent(this, cls).apply {
         note?.let {
-            putExtra(NoteFragment.ARG_NOTE, note)
+            putExtra(NoteFragment.ARG_NOTE, it)
+        }
+        mode?.let {
+            putExtra(NoteActivity.NOTE_MODE, it)
         }
     }
     startActivity(intent)
