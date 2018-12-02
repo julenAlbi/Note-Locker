@@ -38,6 +38,10 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication  {
 
         setSupportActionBar(toolbar_note)
 
+        //For back button
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
@@ -55,6 +59,11 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication  {
         }
 
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
