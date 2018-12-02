@@ -14,13 +14,38 @@ import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 import org.joda.time.DateTime
 
-class NoteListActivity : AppCompatActivity() {
+class NoteListActivity : AppCompatActivity(), FragmentCommunication {
+    override fun changeFragment(note: Note?) {
+        if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
+            twoPaneMode = NoteActivity.VIEW_NOTE
+
+        }else{
+            twoPaneMode = NoteActivity.ADD_EDIT
+        }
+        if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
+            val fragment = AddNoteFragment.newInstance()
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.noteFrame, fragment)
+                    .commit()
+        }else{
+            val fragment = NoteFragment.newInstance(note!!)
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.noteFrame, fragment)
+                    .commit()
+        }
+        invalidateOptionsMenu()
+    }
 
     private var twoPane: Boolean = false
 
     private var notes: List<Note>? = null
 
-    private var twoPaneMode: String? =  null
+
+    companion object {
+        private var twoPaneMode: String? =  null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

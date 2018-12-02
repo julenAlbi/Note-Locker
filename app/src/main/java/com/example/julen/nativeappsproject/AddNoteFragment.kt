@@ -1,12 +1,16 @@
 package com.example.julen.nativeappsproject
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
 import com.example.julen.nativeappsproject.model.Note
+import kotlinx.android.synthetic.main.fragment_add_note.*
 import kotlinx.android.synthetic.main.fragment_add_note.view.*
+import org.joda.time.DateTime
 
 class AddNoteFragment : Fragment() {
 
@@ -15,6 +19,7 @@ class AddNoteFragment : Fragment() {
      */
     private var note: Note? = null
 
+    var fragmenCommunication : FragmentCommunication? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +34,17 @@ class AddNoteFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val acti = context as Activity
+        fragmenCommunication = acti as FragmentCommunication
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_save -> {
                 Log.d("DEBUGGIN","Save_action item selected.")
-                saveNote()
+                fragmenCommunication?.changeFragment(saveNote())
                 return true
             }
         }
@@ -41,8 +52,10 @@ class AddNoteFragment : Fragment() {
         return false
     }
 
-    private fun saveNote() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun saveNote(): Note {
+
+        return (Note(noteName.text.toString(),noteTextEditing.text.toString(), DateTime.now(), DateTime.now(),lockedCheckBox.isChecked))
+
     }
 
     /**
