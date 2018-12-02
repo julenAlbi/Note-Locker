@@ -1,10 +1,8 @@
 package com.example.julen.nativeappsproject
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
@@ -14,7 +12,6 @@ import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 import org.joda.time.DateTime
-import java.util.*
 
 class NoteListActivity : AppCompatActivity() {
 
@@ -29,7 +26,7 @@ class NoteListActivity : AppCompatActivity() {
 
         addSecretButton.setOnClickListener {
             if(twoPane){
-                val fragment = addNoteFragment.newInstance()
+                val fragment = AddNoteFragment.newInstance()
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.noteFrame, fragment)

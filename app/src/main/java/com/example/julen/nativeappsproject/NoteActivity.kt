@@ -23,7 +23,7 @@ class NoteActivity : AppCompatActivity() {
 
 
             val FragmentToDisplay = if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT))
-                addNoteFragment.newInstance()
+                AddNoteFragment.newInstance()
             else
                 NoteFragment.newInstance(
                         intent.getSerializableExtra(NoteFragment.ARG_NOTE) as Note

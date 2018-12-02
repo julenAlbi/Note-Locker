@@ -1,7 +1,5 @@
 package com.example.julen.nativeappsproject
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.fragment_add_note.view.*
-import kotlinx.android.synthetic.main.fragment_note.view.*
 
-class addNoteFragment : Fragment() {
+class AddNoteFragment : Fragment() {
 
     /**
      * The note this fragment is representing
@@ -59,10 +56,10 @@ class addNoteFragment : Fragment() {
          * this fragment using the provided parameters.
          *
          * @param note the note that is going to be edited. If note is null, a new note is going to be created.
-         * @return A new instance of fragment addNoteFragment.
+         * @return A new instance of fragment AddNoteFragment.
         */
         @JvmStatic
-        fun newInstance(note : Note? = null) = addNoteFragment().apply {
+        fun newInstance(note : Note? = null) = AddNoteFragment().apply {
             note?.let {
                 arguments = Bundle().apply {
                     putSerializable(NoteFragment.ARG_NOTE, note)

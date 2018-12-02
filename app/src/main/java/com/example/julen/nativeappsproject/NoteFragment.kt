@@ -60,7 +60,7 @@ class NoteFragment : Fragment() {
          * this fragment using the provided parameters.
          *
          * @param note the note that is going to display.
-         * @return A new instance of fragment addNoteFragment.
+         * @return A new instance of fragment AddNoteFragment.
          */
         const val ARG_NOTE = "item_id"
 
