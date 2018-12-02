@@ -45,7 +45,7 @@ class addNoteFragment : Fragment() {
         // The let construct calls the specified function block with this value as its argument
         // and returns its result.
         note?.let {
-            rootView.noteNameLabel.text = it.alias
+            rootView.noteName.append(it.alias)
             rootView.lockedCheckBox.isChecked = it.locked
             rootView.noteTextEditing.append(it.secret.toString())
         }
@@ -62,7 +62,7 @@ class addNoteFragment : Fragment() {
          * @return A new instance of fragment addNoteFragment.
         */
         @JvmStatic
-        fun newInstance(note : Note? = null) = NoteFragment().apply {
+        fun newInstance(note : Note? = null) = addNoteFragment().apply {
             note?.let {
                 arguments = Bundle().apply {
                     putSerializable(NoteFragment.ARG_NOTE, note)
