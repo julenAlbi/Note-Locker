@@ -23,7 +23,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
             twoPaneMode = NoteActivity.ADD_EDIT
         }
         if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
-            val fragment = AddNoteFragment.newInstance()
+            val fragment = AddNoteFragment.newInstance(note)
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.noteFrame, fragment)

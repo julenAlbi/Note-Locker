@@ -1,11 +1,14 @@
 package com.example.julen.nativeappsproject
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.example.julen.nativeappsproject.model.Note
@@ -18,8 +21,11 @@ class NoteFragment : Fragment() {
      */
     private lateinit var note: Note
 
+    var fragmenCommunication : FragmentCommunication? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true);
 
         arguments!!.let {
             if (it.containsKey(ARG_NOTE)) {
@@ -29,6 +35,24 @@ class NoteFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val acti = context as Activity
+        fragmenCommunication = acti as FragmentCommunication
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.action_edit -> {
+                Log.d("DEBUGGIN","Save_action item selected.")
+                fragmenCommunication?.changeFragment(note)
+                return true
+            }
+        }
+        Log.d("DEBUGGIN","Bad itemselected.")
+        return false
     }
 
     /**

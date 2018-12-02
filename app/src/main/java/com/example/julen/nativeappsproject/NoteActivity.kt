@@ -17,7 +17,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication  {
             intent.putExtra(NoteActivity.NOTE_MODE,NoteActivity.ADD_EDIT)
         }
         val FragmentToDisplay = if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT))
-            AddNoteFragment.newInstance()
+            AddNoteFragment.newInstance(note)
         else
             NoteFragment.newInstance(note!!)
         supportFragmentManager.beginTransaction()
