@@ -1,16 +1,13 @@
-package com.example.julen.nativeappsproject
+package com.example.julen.nativeappsproject.note
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import com.example.julen.nativeappsproject.extensions.startNoteActivity
+import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.note_list_content.view.*
-import kotlinx.android.synthetic.main.note_list_content.*
 
 class NoteListAdapter(private val parentActivity: NoteListActivity,
                       private val notes: List<Note>,
@@ -20,6 +17,7 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
     private val onClickListener: View.OnClickListener
     var showNoteFragment: ((note: Note) -> Unit)? = null
     var showNoteActivity: ((note: Note) -> Unit)? = null
+
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -32,6 +30,7 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
             }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -60,6 +59,7 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
     }
 
     override fun getItemCount() = notes.size
+
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.NoteTitle

@@ -1,22 +1,23 @@
-package com.example.julen.nativeappsproject
+package com.example.julen.nativeappsproject.note
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.activity_note_fragment.*
 
-class NoteActivity : AppCompatActivity(), FragmentCommunication  {
+class NoteActivity : AppCompatActivity(), FragmentCommunication {
     override fun changeFragment(note : Note?) {
 
-        if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT)){
-            intent.putExtra(NoteActivity.NOTE_MODE,NoteActivity.VIEW_NOTE)
+        if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
+            intent.putExtra(NOTE_MODE, VIEW_NOTE)
 
         }else{
-            intent.putExtra(NoteActivity.NOTE_MODE,NoteActivity.ADD_EDIT)
+            intent.putExtra(NOTE_MODE, ADD_EDIT)
         }
-        val FragmentToDisplay = if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT))
+        val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
             AddNoteFragment.newInstance(note)
         else
             NoteFragment.newInstance(note!!)
@@ -47,7 +48,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication  {
             // using a fragment transaction.
 
 
-            val FragmentToDisplay = if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT))
+            val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
                 AddNoteFragment.newInstance()
             else
                 NoteFragment.newInstance(
@@ -69,7 +70,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication  {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.note_menu,menu)
         Log.d("Menuen", "Honea sartu da.")
-        if(intent.getStringExtra(NoteActivity.NOTE_MODE).equals(NoteActivity.ADD_EDIT)){
+        if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
             menu?.findItem(R.id.action_save)?.isVisible = true
             menu?.findItem(R.id.action_edit)?.isVisible = false
         }else{

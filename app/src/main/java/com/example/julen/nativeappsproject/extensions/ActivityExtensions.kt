@@ -3,9 +3,9 @@ package com.example.julen.nativeappsproject.extensions
 import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
-import com.example.julen.nativeappsproject.NoteActivity
-import com.example.julen.nativeappsproject.NoteFragment
-import com.example.julen.nativeappsproject.NoteListActivity
+import com.example.julen.nativeappsproject.note.NoteActivity
+import com.example.julen.nativeappsproject.note.NoteFragment
+import com.example.julen.nativeappsproject.note.NoteListActivity
 import com.example.julen.nativeappsproject.SignUpActivity
 import com.example.julen.nativeappsproject.model.Note
 

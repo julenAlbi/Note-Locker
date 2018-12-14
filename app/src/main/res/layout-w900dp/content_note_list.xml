@@ -16,7 +16,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".NoteListActivity"
+    tools:context=".note.NoteListActivity"
     tools:listitem="@layout/note_list_content" >
 </android.support.v7.widget.RecyclerView>
 

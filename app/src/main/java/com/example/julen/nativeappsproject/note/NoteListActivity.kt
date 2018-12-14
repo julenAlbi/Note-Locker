@@ -1,9 +1,10 @@
-package com.example.julen.nativeappsproject
+package com.example.julen.nativeappsproject.note
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
+import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
