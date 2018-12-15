@@ -9,7 +9,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import com.example.julen.nativeappsproject.R
+import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.fragment_note.view.*
 
@@ -19,6 +24,8 @@ class NoteFragment : Fragment() {
      * The note this fragment is representing
      */
     private lateinit var note: Note
+
+    private lateinit var noteViewModel: NoteViewModel
 
     var fragmenCommunication : FragmentCommunication? = null
 
@@ -45,12 +52,10 @@ class NoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_edit -> {
-                Log.d("DEBUGGIN","Save_action item selected.")
                 fragmenCommunication?.changeFragment(note)
                 return true
             }
         }
-        Log.d("DEBUGGIN","Bad itemselected.")
         return false
     }
 
@@ -60,20 +65,31 @@ class NoteFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_note, container, false)
+//        val rootView = inflater.inflate(R.layout.fragment_note, container, false)
+        val binding: FragmentNoteBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_note, container, false)
+
 
         //activity?.toolbar_note?.title = note.alias
 
         // Show the note content
         // The let construct calls the specified function block with this value as its argument
         // and returns its result.
-        note.let {
-            rootView.notealias.text = it.alias
-            rootView.createdDate.text = it.createDate.toString("dd/mm/yyyy")
-            rootView.updatedDate.text = it.updateDate.toString("dd/mm/yyyy")
-            rootView.notetext.append(it.secret.toString())
-        }
-        return rootView
+        /** note.let {
+        rootView.notealias.text = it.alias
+        rootView.createdDate.text = it.createDate.toString("dd/mm/yyyy")
+        rootView.updatedDate.text = it.updateDate.toString("dd/mm/yyyy")
+        rootView.notetext.append(it.secret.toString())
+        }*/
+
+        //When geting the viewmodel from the store we not only specify the class but also a key (the crime's UUID)
+        //This allows us to specifically get the viewmodel of a certain crime
+        //We also have to provide the activity, and not the fragment, as the scope.
+        //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation.
+        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note)).get( NoteViewModel::class.java)
+        binding.noteViewModel = noteViewModel
+        binding.setLifecycleOwner(activity)
+
+        return binding.root
     }
 
     companion object {
@@ -89,9 +105,9 @@ class NoteFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(note : Note) = NoteFragment().apply {
-                    arguments = Bundle().apply {
-                        putSerializable(ARG_NOTE, note)
-                    }
-                }
+            arguments = Bundle().apply {
+                putSerializable(ARG_NOTE, note)
+            }
+        }
     }
 }
