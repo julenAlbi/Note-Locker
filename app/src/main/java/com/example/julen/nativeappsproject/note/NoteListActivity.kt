@@ -138,9 +138,9 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
     private fun getFakeNotes(): List<Note>? {
         val noteList = mutableListOf<Note>()
-        noteList.add(Note("pasahitzak", "iupsiub:fudayby", DateTime.now(), DateTime.now(), true))
-        noteList.add(Note("sekretuek", "ouygouydvsoytvsodvtsdp", DateTime.now(), DateTime.now(), true))
-        noteList.add(Note("beste sekretue", "byfofue fdouyav wpuey", DateTime.now(), DateTime.now(), false))
+        noteList.add(Note(0,"pasahitzak", "iupsiub:fudayby", DateTime.now(), DateTime.now(), true))
+        noteList.add(Note(0,"sekretuek", "ouygouydvsoytvsodvtsdp", DateTime.now(), DateTime.now(), true))
+        noteList.add(Note(0,"beste sekretue", "byfofue fdouyav wpuey", DateTime.now(), DateTime.now(), false))
         return noteList
     }
 

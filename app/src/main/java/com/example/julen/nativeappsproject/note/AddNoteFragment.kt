@@ -41,7 +41,7 @@ class AddNoteFragment : Fragment() {
         note?.let {
 
         }?: run{
-            note = Note("","")
+            note = Note(0,"","")
         }
     }
 
