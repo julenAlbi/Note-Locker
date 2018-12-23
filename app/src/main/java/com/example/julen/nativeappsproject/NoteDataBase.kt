@@ -16,7 +16,7 @@ abstract class NoteDataBase : RoomDatabase() {
     companion object {
         var INSTANCE: NoteDataBase? = null
 
-        fun getAppDataBase(context: Context): NoteDataBase? {
+        fun getNoteDataBase(context: Context): NoteDataBase? {
             if (INSTANCE == null){
                 synchronized(NoteDataBase::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext, NoteDataBase::class.java, "myDB").build()

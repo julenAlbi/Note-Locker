@@ -1,6 +1,7 @@
 package com.example.julen.nativeappsproject.note
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -85,7 +86,7 @@ class NoteFragment : Fragment() {
         //This allows us to specifically get the viewmodel of a certain crime
         //We also have to provide the activity, and not the fragment, as the scope.
         //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation.
-        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note)).get( NoteViewModel::class.java)
+        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application() )).get( NoteViewModel::class.java)
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
 

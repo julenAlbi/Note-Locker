@@ -1,6 +1,7 @@
 package com.example.julen.nativeappsproject.note
 
 import android.app.Activity
+import android.app.Application
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -85,7 +86,7 @@ class AddNoteFragment : Fragment() {
         rootView.lockedCheckBox.isChecked = it.locked
         rootView.noteTextEditing.append(it.secret.toString())
         }*/
-        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note!!)).get( NoteViewModel::class.java)
+        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note!!, Application())).get( NoteViewModel::class.java)
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
         return binding.root
