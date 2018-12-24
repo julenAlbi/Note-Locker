@@ -9,7 +9,8 @@ import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.activity_note_fragment.*
 
 class NoteActivity : AppCompatActivity(), FragmentCommunication {
-    override fun changeFragment(note : Note?) {
+
+    override fun changeFragment(note :  Note?) {
 
         if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
             intent.putExtra(NOTE_MODE, VIEW_NOTE)
@@ -18,9 +19,9 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
             intent.putExtra(NOTE_MODE, ADD_EDIT)
         }
         val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
-            AddNoteFragment.newInstance(note)
+            AddNoteFragment.newInstance()
         else
-            NoteFragment.newInstance(note!!)
+            NoteFragment.newInstance()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.noteFrame, FragmentToDisplay)
                 .commit()
@@ -31,6 +32,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         const val ADD_EDIT = "add_edit"
         const val VIEW_NOTE = "view_note"
         const val NOTE_MODE = "note_mode"
+        const val ADD = "add"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
 
             val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
-                AddNoteFragment.newInstance()
+                AddNoteFragment.newInstance(intent.getSerializableExtra(NoteFragment.ARG_NOTE) as Note)
             else
                 NoteFragment.newInstance(
                         intent.getSerializableExtra(NoteFragment.ARG_NOTE) as Note

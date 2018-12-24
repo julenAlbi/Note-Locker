@@ -17,7 +17,10 @@ fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java)
 
 fun Activity.startSignUpActivity() = startActivity(SignUpActivity::class.java)
 
-fun Activity.startNoteActivity(note : Note? = null, mode : String) = startActivity(NoteActivity::class.java, note, mode)
+fun Activity.startNoteActivity(note : Note? = null, mode : String, add : String = ""){
+    var notee = if(add.equals(NoteActivity.ADD)) Note(0,"","") else note
+    startActivity(NoteActivity::class.java, notee, mode)
+}
 
 private fun Activity.startActivity(cls: Class<*>, note : Note? = null, mode: String? = null) {
     val intent = Intent(this, cls).apply {

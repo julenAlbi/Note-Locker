@@ -61,7 +61,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
                         .replace(R.id.noteFrame, fragment)
                         .commit()
             }else{
-                startNoteActivity(mode = NoteActivity.ADD_EDIT)
+                startNoteActivity(mode = NoteActivity.ADD_EDIT, add = NoteActivity.ADD)
             }
         }
 

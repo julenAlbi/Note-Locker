@@ -19,10 +19,6 @@ import org.joda.time.DateTime
 
 class AddNoteFragment : Fragment() {
 
-    /**
-     * The note this fragment is representing
-     */
-    private var note: Note? = null
 
     private lateinit var noteViewModel: NoteViewModel
 
@@ -31,19 +27,6 @@ class AddNoteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
-
-        arguments?.let {
-            if (it.containsKey(NoteFragment.ARG_NOTE)) {
-                // Load the note specified by the fragment
-                // arguments.
-                note = it.getSerializable(NoteFragment.ARG_NOTE) as Note
-            }
-        }
-        note?.let {
-
-        }?: run{
-            note = Note(0,"","")
-        }
     }
 
     override fun onAttach(context: Context?) {
@@ -73,20 +56,28 @@ class AddNoteFragment : Fragment() {
      * - update UI
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-//        val rootView = inflater.inflate(R.layout.fragment_add_note, container, false)
-        val binding: FragmentAddNoteBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_note, container, false)
-        //activity?.toolbar_note?.title = note.alias
 
-        // Show the note content
-        // The let construct calls the specified function block with this value as its argument
-        // and returns its result.
-        /**note?.let {
-        rootView.noteName.append(it.alias)
-        rootView.lockedCheckBox.isChecked = it.locked
-        rootView.noteTextEditing.append(it.secret.toString())
-        }*/
-        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note!!, Application())).get( NoteViewModel::class.java)
+        val binding: FragmentAddNoteBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_note, container, false)
+
+        var note : Note? = null
+
+        arguments?.let {
+            if (it.containsKey(NoteFragment.ARG_NOTE)) {
+                // Load the note specified by the fragment
+                // arguments.
+                note = it.getSerializable(NoteFragment.ARG_NOTE) as Note
+                if (note == null) {
+                    note = Note(0,"","")
+                }
+            }
+        }
+
+        //When geting the viewmodel from the store we not only specify the class but also the note.
+        //The note can be null, that's because if it is a fragment change (from [AddNoteFragment] to [NoteFragment]),
+        //the viewmodel still exists and contains the note, so we don't have to pass it again.
+        //We also have to provide the activity, and not the fragment, as the scope.
+        //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation).
+        noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application())).get( NoteViewModel::class.java)
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
         return binding.root

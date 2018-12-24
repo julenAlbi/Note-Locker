@@ -21,10 +21,6 @@ import kotlinx.android.synthetic.main.fragment_note.view.*
 
 class NoteFragment : Fragment() {
 
-    /**
-     * The note this fragment is representing
-     */
-    private lateinit var note: Note
 
     private lateinit var noteViewModel: NoteViewModel
 
@@ -32,16 +28,7 @@ class NoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true);
-
-        arguments!!.let {
-            if (it.containsKey(ARG_NOTE)) {
-                // Load the note specified by the fragment
-                // arguments.
-                note = it.getSerializable(ARG_NOTE) as Note
-            }
-        }
-
+        setHasOptionsMenu(true)
     }
 
     override fun onAttach(context: Context?) {
@@ -53,7 +40,7 @@ class NoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_edit -> {
-                fragmenCommunication?.changeFragment(note)
+                fragmenCommunication?.changeFragment()
                 return true
             }
         }
@@ -65,27 +52,23 @@ class NoteFragment : Fragment() {
      * - update UI
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-//        val rootView = inflater.inflate(R.layout.fragment_note, container, false)
         val binding: FragmentNoteBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_note, container, false)
 
+        var note : Note? = null
 
-        //activity?.toolbar_note?.title = note.alias
+        arguments?.let {
+            if (it.containsKey(ARG_NOTE)) {
+                // Load the note specified by the fragment
+                // arguments.
+                note = it.getSerializable(ARG_NOTE) as Note
+            }
+        }
 
-        // Show the note content
-        // The let construct calls the specified function block with this value as its argument
-        // and returns its result.
-        /** note.let {
-        rootView.notealias.text = it.alias
-        rootView.createdDate.text = it.createDate.toString("dd/mm/yyyy")
-        rootView.updatedDate.text = it.updateDate.toString("dd/mm/yyyy")
-        rootView.notetext.append(it.secret.toString())
-        }*/
-
-        //When geting the viewmodel from the store we not only specify the class but also a key (the crime's UUID)
-        //This allows us to specifically get the viewmodel of a certain crime
+        //When geting the viewmodel from the store we not only specify the class but also the note.
+        //The note can be null, that's because if it is a fragment change (from [AddNoteFragment] to [NoteFragment]),
+        //the viewmodel still exists and contains the note, so we don't have to pass it again.
         //We also have to provide the activity, and not the fragment, as the scope.
-        //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation.
+        //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation).
         noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application() )).get( NoteViewModel::class.java)
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
@@ -105,9 +88,11 @@ class NoteFragment : Fragment() {
         const val ARG_NOTE = "item_id"
 
         @JvmStatic
-        fun newInstance(note : Note) = NoteFragment().apply {
-            arguments = Bundle().apply {
-                putSerializable(ARG_NOTE, note)
+        fun newInstance(note : Note? = null) = NoteFragment().apply {
+            note?.let {
+                arguments = Bundle().apply {
+                    putSerializable(ARG_NOTE, note)
+                }
             }
         }
     }
