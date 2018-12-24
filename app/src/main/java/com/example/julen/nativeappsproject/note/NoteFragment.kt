@@ -70,6 +70,7 @@ class NoteFragment : Fragment() {
         //We also have to provide the activity, and not the fragment, as the scope.
         //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation).
         noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application() )).get( NoteViewModel::class.java)
+        if(NoteListActivity.twoPane && note != null) noteViewModel.note.value = note //In twopane mode, viewmodel always is the same, so needs to change the note.
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
 

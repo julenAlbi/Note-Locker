@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_note_fragment.*
 
 class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
-    override fun changeFragment(note :  Note?) {
+    override fun changeFragment() {
 
         if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
             intent.putExtra(NOTE_MODE, VIEW_NOTE)
@@ -60,8 +60,6 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
                     .add(R.id.noteFrame, FragmentToDisplay)
                     .commit()
         }
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -71,7 +69,6 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.note_menu,menu)
-        Log.d("Menuen", "Honea sartu da.")
         if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
             menu?.findItem(R.id.action_save)?.isVisible = true
             menu?.findItem(R.id.action_edit)?.isVisible = false

@@ -1,6 +1,8 @@
 package com.example.julen.nativeappsproject.note
 
+import android.app.Application
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +18,8 @@ import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
 class NoteListActivity : AppCompatActivity(), FragmentCommunication {
-    override fun changeFragment(note: Note?) {
+
+    override fun changeFragment() {
         twoPaneMode = if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
             NoteActivity.VIEW_NOTE
 
@@ -24,13 +27,13 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
             NoteActivity.ADD_EDIT
         }
         if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
-            val fragment = AddNoteFragment.newInstance(note)
+            val fragment = AddNoteFragment.newInstance()
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.noteFrame, fragment)
                     .commit()
         }else{
-            val fragment = NoteFragment.newInstance(note!!)
+            val fragment = NoteFragment.newInstance()
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.noteFrame, fragment)
@@ -39,12 +42,11 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         invalidateOptionsMenu()
     }
 
-    private var twoPane: Boolean = false
-
     private lateinit var noteRepo: NoteRepository
 
     companion object {
         private var twoPaneMode: String? =  null
+        var twoPane: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         addSecretButton.setOnClickListener {
             if(twoPane){
                 twoPaneMode = NoteActivity.ADD_EDIT
-                val fragment = AddNoteFragment.newInstance()
+                val fragment = AddNoteFragment.newInstance(Note(0,"",""))
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.noteFrame, fragment)
@@ -74,13 +76,13 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         }
 
         noteRepo = NoteRepository(application)
+        noteRepo.insertNote(Note(0,"kasuen lamar", "ireugpiuerbfpgiuevpuybfpeayw fauewy"))
 
         //Get all notes LiveData notes from reposiroty
         val noteListObserver = Observer<List<Note>> {
             (note_list.adapter as NoteListAdapter).setNotes(it!!)
         }
         noteRepo.getAllNotes().observe(this, noteListObserver)
-
 
         toolbar.title = title
         note_list.adapter = NoteListAdapter(twoPane)
