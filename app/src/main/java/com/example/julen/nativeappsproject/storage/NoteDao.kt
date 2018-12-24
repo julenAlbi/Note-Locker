@@ -1,4 +1,4 @@
-package com.example.julen.nativeappsproject
+package com.example.julen.nativeappsproject.storage
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
