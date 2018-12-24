@@ -9,15 +9,14 @@ import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.note_list_content.view.*
 
-class NoteListAdapter(private val parentActivity: NoteListActivity,
-                      private val notes: List<Note>,
-                      private val twoPane: Boolean) :
+class NoteListAdapter(private val twoPane: Boolean) :
         RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
     var showNoteFragment: ((note: Note) -> Unit)? = null
     var showNoteActivity: ((note: Note) -> Unit)? = null
 
+    private var notes: List<Note>? = null
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -31,6 +30,10 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
         }
     }
 
+    fun setNotes(newnotes : List<Note>){
+        this.notes = newnotes
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -39,26 +42,34 @@ class NoteListAdapter(private val parentActivity: NoteListActivity,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes[position]
-        holder.name.text = note.alias
-        holder.lastEditedDate.text = note.updateDate.toString("dd/mm/yyyy")
-        holder.createdDate.text = note.createDate.toString("dd/mm/yyyy")
-        //is locked?
-        if (note.locked) {
-            holder.locked.visibility = View.VISIBLE
-            holder.unlocked.visibility = View.INVISIBLE
-        }else{
-            holder.locked.visibility = View.INVISIBLE
-            holder.unlocked.visibility = View.VISIBLE
+        notes.let{
+            val note = notes!![position]
+            holder.name.text = note.alias
+            holder.lastEditedDate.text = note.updateDate.toString("dd/mm/yyyy")
+            holder.createdDate.text = note.createDate.toString("dd/mm/yyyy")
+            //is locked?
+            if (note.locked) {
+                holder.locked.visibility = View.VISIBLE
+                holder.unlocked.visibility = View.INVISIBLE
+            }else{
+                holder.locked.visibility = View.INVISIBLE
+                holder.unlocked.visibility = View.VISIBLE
+            }
+
+            with(holder.itemView) {
+                tag = note // Save the note represented by this view
+                setOnClickListener(onClickListener)
+            }
         }
 
-        with(holder.itemView) {
-            tag = note // Save the note represented by this view
-            setOnClickListener(onClickListener)
-        }
     }
 
-    override fun getItemCount() = notes.size
+    override fun getItemCount() : Int{
+        notes?.let {
+            return notes!!.size
+        }
+        return 0
+    }
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

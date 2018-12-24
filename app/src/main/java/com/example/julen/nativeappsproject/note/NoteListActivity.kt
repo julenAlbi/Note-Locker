@@ -1,7 +1,8 @@
 package com.example.julen.nativeappsproject.note
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.example.julen.nativeappsproject.R
@@ -9,19 +10,18 @@ import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
 import com.example.julen.nativeappsproject.model.Note
+import com.example.julen.nativeappsproject.storage.NoteRepository
 import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
-
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
-import org.joda.time.DateTime
 
 class NoteListActivity : AppCompatActivity(), FragmentCommunication {
     override fun changeFragment(note: Note?) {
-        if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
-            twoPaneMode = NoteActivity.VIEW_NOTE
+        twoPaneMode = if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
+            NoteActivity.VIEW_NOTE
 
         }else{
-            twoPaneMode = NoteActivity.ADD_EDIT
+            NoteActivity.ADD_EDIT
         }
         if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
             val fragment = AddNoteFragment.newInstance(note)
@@ -41,8 +41,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
     private var twoPane: Boolean = false
 
-    private var notes: List<Note>? = null
-
+    private lateinit var noteRepo: NoteRepository
 
     companion object {
         private var twoPaneMode: String? =  null
@@ -74,10 +73,17 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
             twoPane = true
         }
 
-        notes = getFakeNotes()
+        noteRepo = NoteRepository(application)
+
+        //Get all notes LiveData notes from reposiroty
+        val noteListObserver = Observer<List<Note>> {
+            (note_list.adapter as NoteListAdapter).setNotes(it!!)
+        }
+        noteRepo.getAllNotes().observe(this, noteListObserver)
+
 
         toolbar.title = title
-        note_list.adapter = NoteListAdapter(this, notes!!, twoPane)
+        note_list.adapter = NoteListAdapter(twoPane)
         note_list.layoutManager = LinearLayoutManager(this)
         (note_list.adapter as NoteListAdapter).showNoteActivity = { note ->
             if(note.locked){
@@ -111,12 +117,13 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
                         .commit()
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         twoPaneMode?.let {
             menuInflater.inflate(R.menu.note_menu,menu)
-            if(it.equals(NoteActivity.ADD_EDIT)){
+            if(it == NoteActivity.ADD_EDIT){
                 menu?.findItem(R.id.action_save)?.isVisible = true
                 menu?.findItem(R.id.action_edit)?.isVisible = false
             }else{
@@ -134,14 +141,6 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
     private fun validatePassword(inputPassword: String): Boolean {
         val sharedPreferencesManager= SharedPreferencesManager(this)
         return EncryptionServices(applicationContext).decrypt(sharedPreferencesManager.getPassword()) == inputPassword
-    }
-
-    private fun getFakeNotes(): List<Note>? {
-        val noteList = mutableListOf<Note>()
-        noteList.add(Note(0,"pasahitzak", "iupsiub:fudayby", DateTime.now(), DateTime.now(), true))
-        noteList.add(Note(0,"sekretuek", "ouygouydvsoytvsodvtsdp", DateTime.now(), DateTime.now(), true))
-        noteList.add(Note(0,"beste sekretue", "byfofue fdouyav wpuey", DateTime.now(), DateTime.now(), false))
-        return noteList
     }
 
 }
