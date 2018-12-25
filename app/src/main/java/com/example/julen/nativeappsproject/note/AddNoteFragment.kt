@@ -47,6 +47,11 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun saveNote(): Note {
+        if(arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.ADD_NOTE){
+
+        }else{
+
+        }
         return noteViewModel.note.value!!
     }
 
@@ -89,6 +94,9 @@ class AddNoteFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
+         * If a note is editting, note parameter will be null.
+         * If a non existing note is adding, note parameter will not be null.
+         *
          * @param note the note that is going to be edited. If note is null, a new note is going to be created.
          * @return A new instance of fragment AddNoteFragment.
          */
@@ -97,6 +105,11 @@ class AddNoteFragment : Fragment() {
             note?.let {
                 arguments = Bundle().apply {
                     putSerializable(NoteFragment.ARG_NOTE, note)
+                    putString(NoteActivity.NOTE_MODE, NoteActivity.ADD_NOTE)
+                }
+            }?: run{
+                arguments = Bundle().apply {
+                    putString(NoteActivity.NOTE_MODE, NoteActivity.EDIT_NOTE)
                 }
             }
         }

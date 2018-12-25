@@ -43,9 +43,9 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
     private lateinit var noteRepo: NoteRepository
 
     companion object {
-        private var twoPaneMode: String? =  null
         var twoPane: Boolean = false
     }
+    private var twoPaneMode: String? =  null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
