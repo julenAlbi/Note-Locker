@@ -74,7 +74,6 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         }
 
         noteRepo = NoteRepository(application)
-        noteRepo.insertNote(Note(0,"kasuen lamar", "ireugpiuerbfpgiuevpuybfpeayw fauewy"))
 
         //Get all notes LiveData notes from reposiroty
         val noteListObserver = Observer<List<Note>> {

@@ -42,6 +42,12 @@ class AddNoteFragment : Fragment() {
                 fragmenCommunication?.changeFragment()
                 return true
             }
+            R.id.action_delete -> {
+                noteViewModel.delete()
+                activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
+                if(!NoteListActivity.twoPane) activity!!.finish()
+                return true
+            }
         }
         return false
     }
