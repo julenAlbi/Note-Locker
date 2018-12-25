@@ -17,8 +17,8 @@ fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java)
 
 fun Activity.startSignUpActivity() = startActivity(SignUpActivity::class.java)
 
-fun Activity.startNoteActivity(note : Note? = null, mode : String, add : String = ""){
-    var notee = if(add.equals(NoteActivity.ADD)) Note(0,"","") else note
+fun Activity.startNoteActivity(note : Note? = null, mode : String){
+    var notee = if(mode.equals(NoteActivity.ADD_NOTE)) Note(0,"","") else note
     startActivity(NoteActivity::class.java, notee, mode)
 }
 

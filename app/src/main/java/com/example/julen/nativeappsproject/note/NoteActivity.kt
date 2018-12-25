@@ -2,7 +2,6 @@ package com.example.julen.nativeappsproject.note
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
@@ -12,13 +11,12 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
     override fun changeFragment() {
 
-        if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
+        if(intent.getStringExtra(NOTE_MODE) == ADD_NOTE || intent.getStringExtra(NOTE_MODE) == EDIT_NOTE){
             intent.putExtra(NOTE_MODE, VIEW_NOTE)
-
         }else{
-            intent.putExtra(NOTE_MODE, ADD_EDIT)
+            intent.putExtra(NOTE_MODE, EDIT_NOTE)
         }
-        val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
+        val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE) == ADD_NOTE || intent.getStringExtra(NOTE_MODE) == EDIT_NOTE)
             AddNoteFragment.newInstance()
         else
             NoteFragment.newInstance()
@@ -29,10 +27,10 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
     }
 
     companion object {
-        const val ADD_EDIT = "add_edit"
+        const val ADD_NOTE = "add_note"
         const val VIEW_NOTE = "view_note"
         const val NOTE_MODE = "note_mode"
-        const val ADD = "add"
+        const val EDIT_NOTE = "edit_note"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +48,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
             // using a fragment transaction.
 
 
-            val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT))
+            val FragmentToDisplay = if(intent.getStringExtra(NOTE_MODE) == ADD_NOTE || intent.getStringExtra(NOTE_MODE) == EDIT_NOTE)
                 AddNoteFragment.newInstance(intent.getSerializableExtra(NoteFragment.ARG_NOTE) as Note)
             else
                 NoteFragment.newInstance(
@@ -69,7 +67,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.note_menu,menu)
-        if(intent.getStringExtra(NOTE_MODE).equals(ADD_EDIT)){
+        if(intent.getStringExtra(NOTE_MODE) == ADD_NOTE || intent.getStringExtra(NOTE_MODE) == EDIT_NOTE){
             menu?.findItem(R.id.action_save)?.isVisible = true
             menu?.findItem(R.id.action_edit)?.isVisible = false
         }else{

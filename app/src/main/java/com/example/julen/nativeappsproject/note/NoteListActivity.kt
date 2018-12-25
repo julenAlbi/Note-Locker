@@ -1,8 +1,6 @@
 package com.example.julen.nativeappsproject.note
 
-import android.app.Application
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -20,13 +18,13 @@ import kotlinx.android.synthetic.main.content_note_list.*
 class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
     override fun changeFragment() {
-        twoPaneMode = if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
+        twoPaneMode = if(twoPaneMode.equals(NoteActivity.ADD_NOTE) || twoPaneMode.equals(NoteActivity.EDIT_NOTE)){
             NoteActivity.VIEW_NOTE
 
         }else{
-            NoteActivity.ADD_EDIT
+            NoteActivity.EDIT_NOTE
         }
-        if(twoPaneMode.equals(NoteActivity.ADD_EDIT)){
+        if(twoPaneMode.equals(NoteActivity.ADD_NOTE) || twoPaneMode.equals(NoteActivity.EDIT_NOTE)){
             val fragment = AddNoteFragment.newInstance()
             supportFragmentManager
                     .beginTransaction()
@@ -56,14 +54,14 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
         addSecretButton.setOnClickListener {
             if(twoPane){
-                twoPaneMode = NoteActivity.ADD_EDIT
+                twoPaneMode = NoteActivity.ADD_NOTE
                 val fragment = AddNoteFragment.newInstance(Note(0,"",""))
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.noteFrame, fragment)
                         .commit()
             }else{
-                startNoteActivity(mode = NoteActivity.ADD_EDIT, add = NoteActivity.ADD)
+                startNoteActivity(mode = NoteActivity.ADD_NOTE)
             }
         }
 
@@ -125,7 +123,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         twoPaneMode?.let {
             menuInflater.inflate(R.menu.note_menu,menu)
-            if(it == NoteActivity.ADD_EDIT){
+            if(it == NoteActivity.ADD_NOTE || it == NoteActivity.EDIT_NOTE){
                 menu?.findItem(R.id.action_save)?.isVisible = true
                 menu?.findItem(R.id.action_edit)?.isVisible = false
             }else{
