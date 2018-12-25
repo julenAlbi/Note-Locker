@@ -46,13 +46,11 @@ class AddNoteFragment : Fragment() {
         return false
     }
 
-    private fun saveNote(): Note {
-        if(arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.ADD_NOTE){
-
-        }else{
-
-        }
-        return noteViewModel.note.value!!
+    private fun saveNote(){
+        if(arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.ADD_NOTE)
+            noteViewModel.insert()
+        else
+            noteViewModel.update()
     }
 
     /**
