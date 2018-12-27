@@ -16,6 +16,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
+import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.fragment_note.view.*
 
@@ -70,13 +71,19 @@ class NoteFragment : Fragment() {
             }
         }
 
+        note?.let { if(note!!.locked) note!!.secret = EncryptionServices(context!!).decrypt(note!!.secret) }
+
+
         //When geting the viewmodel from the store we not only specify the class but also the note.
         //The note can be null, that's because if it is a fragment change (from [AddNoteFragment] to [NoteFragment]),
         //the viewmodel still exists and contains the note, so we don't have to pass it again.
         //We also have to provide the activity, and not the fragment, as the scope.
         //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation).
         noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application() )).get( NoteViewModel::class.java)
-        if(NoteListActivity.twoPane && note != null) noteViewModel.note.value = note //In twopane mode, viewmodel always is the same, so needs to change the note.
+        //In twopane mode, viewmodel always is the same, so needs to change the note.
+        if(NoteListActivity.twoPane && note != null){
+            noteViewModel.note.value = note
+        }
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
 
@@ -88,6 +95,8 @@ class NoteFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
+         *
+         * In twopanemode, the node will not never be null, in normal mode, when the activity is crearted will have value, otherwise it will be null.
          *
          * @param note the note that is going to display.
          * @return A new instance of fragment AddNoteFragment.

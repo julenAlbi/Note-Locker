@@ -12,6 +12,7 @@ import android.view.*
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentAddNoteBinding
 import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
+import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import kotlinx.android.synthetic.main.fragment_add_note.view.*
@@ -53,10 +54,12 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun saveNote(){
+        if(noteViewModel.note.value!!.locked) noteViewModel.note.value!!.secret = EncryptionServices(context!!).encrypt(noteViewModel.note.value!!.secret)
         if(arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.ADD_NOTE)
             noteViewModel.insert()
         else
             noteViewModel.update()
+        if(noteViewModel.note.value!!.locked) noteViewModel.note.value!!.secret = EncryptionServices(context!!).decrypt(noteViewModel.note.value!!.secret)
     }
 
     /**
@@ -75,10 +78,12 @@ class AddNoteFragment : Fragment() {
                 // arguments.
                 note = it.getSerializable(NoteFragment.ARG_NOTE) as Note
                 if (note == null) {
-                    note = Note(0,"","")
+                    note = Note(0, "", "")
                 }
             }
         }
+        //No need of decryptino, because the decryption was done in view mode.
+        //if(note!!.locked && arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.EDIT_NOTE && note != null) note!!.secret = EncryptionServices(context!!).decrypt(note!!.secret)
 
         //When geting the viewmodel from the store we not only specify the class but also the note.
         //The note can be null, that's because if it is a fragment change (from [AddNoteFragment] to [NoteFragment]),
@@ -86,7 +91,10 @@ class AddNoteFragment : Fragment() {
         //We also have to provide the activity, and not the fragment, as the scope.
         //Otherwise we risk still having two ViewModels (see [android.arch.ViewModelProviders] documentation).
         noteViewModel = ViewModelProviders.of(activity!!, NoteViewModelFactory(note, Application())).get( NoteViewModel::class.java)
-        if(NoteListActivity.twoPane && note != null) noteViewModel.note.value = note //In twopane mode, viewmodel always is the same, so needs to change the note.
+        //In twopane mode, viewmodel always is the same, so needs to change the note.
+        if(NoteListActivity.twoPane && note != null && arguments?.getString(NoteActivity.NOTE_MODE) == NoteActivity.ADD_NOTE){
+            noteViewModel.note.value = note
+        }
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
         return binding.root
