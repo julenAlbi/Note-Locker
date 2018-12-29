@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text='@{noteViewModel.note.createDate.toString("dd/mm/yyyy")}' />
+                    android:text='@{noteViewModel.note.createDate.toString("dd/MM/yyyy")}' />
 
                 <TextView
                     android:id="@+id/updatedDateLabel"
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text='@{noteViewModel.note.updateDate.toString("dd/mm/yyyy")}'/>
+                    android:text='@{noteViewModel.note.updateDate.toString("dd/MM/yyyy")}'/>
             </LinearLayout>
 
             <TextView
