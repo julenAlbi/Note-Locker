@@ -127,7 +127,9 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
      */
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        if (::subscription.isInitialized){
+            subscription.dispose()
+        }
     }
 }
 
