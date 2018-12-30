@@ -1,7 +1,7 @@
 package com.example.julen.nativeappsproject
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.example.julen.nativeappsproject.extensions.startHomeActivity
 import com.example.julen.nativeappsproject.extensions.startSignUpActivity
 import com.example.julen.nativeappsproject.storage.SharedPreferencesManager

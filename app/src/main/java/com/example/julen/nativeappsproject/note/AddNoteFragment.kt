@@ -2,21 +2,21 @@ package com.example.julen.nativeappsproject.note
 
 import android.app.Activity
 import android.app.Application
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentAddNoteBinding
-import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.model.Note
-import kotlinx.android.synthetic.main.fragment_add_note.*
-import kotlinx.android.synthetic.main.fragment_add_note.view.*
-import org.joda.time.DateTime
 
 class AddNoteFragment : Fragment() {
 
@@ -97,6 +97,14 @@ class AddNoteFragment : Fragment() {
         }
         binding.noteViewModel = noteViewModel
         binding.setLifecycleOwner(activity)
+
+        noteViewModel.toastMessage.observe(this, Observer { res ->
+            if (res != null) {
+                val message = res.format(context)
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+        })
+
         return binding.root
     }
 

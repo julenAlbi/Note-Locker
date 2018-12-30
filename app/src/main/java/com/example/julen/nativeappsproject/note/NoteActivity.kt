@@ -1,7 +1,7 @@
 package com.example.julen.nativeappsproject.note
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note

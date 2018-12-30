@@ -1,7 +1,6 @@
 package com.example.julen.nativeappsproject.encription
 
 import android.util.Base64
-import android.util.Log
 import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec

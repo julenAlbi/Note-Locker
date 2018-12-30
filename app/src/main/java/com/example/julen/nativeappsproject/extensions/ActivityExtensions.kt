@@ -4,16 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.widget.Toast
+import com.example.julen.nativeappsproject.SignUpActivity
+import com.example.julen.nativeappsproject.model.Note
 import com.example.julen.nativeappsproject.note.NoteActivity
 import com.example.julen.nativeappsproject.note.NoteFragment
 import com.example.julen.nativeappsproject.note.NoteListActivity
-import com.example.julen.nativeappsproject.SignUpActivity
-import com.example.julen.nativeappsproject.model.Note
 
-fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT){
-    Toast.makeText(this, message, duration).show()
-}
 
 fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java, clearTask = true)
 

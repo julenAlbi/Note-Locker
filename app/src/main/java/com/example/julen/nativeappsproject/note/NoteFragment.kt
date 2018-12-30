@@ -2,23 +2,19 @@ package com.example.julen.nativeappsproject.note
 
 import android.app.Activity
 import android.app.Application
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.model.Note
-import kotlinx.android.synthetic.main.fragment_note.view.*
 
 class NoteFragment : Fragment() {
 
