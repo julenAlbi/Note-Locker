@@ -45,8 +45,8 @@ class NoteListAdapter(private val twoPane: Boolean) :
         notes.let{
             val note = notes!![position]
             holder.name.text = note.alias
-            holder.lastEditedDate.text = note.updateDate.toString("dd/mm/yyyy")
-            holder.createdDate.text = note.createDate.toString("dd/mm/yyyy")
+            holder.lastEditedDate.text = "Last updated: " + note.updateDate.toString("dd/MM/yyyy")
+            holder.createdDate.text = "Created date: " + note.createDate.toString("dd/MM/yyyy")
             //is locked?
             if (note.locked) {
                 holder.locked.visibility = View.VISIBLE
