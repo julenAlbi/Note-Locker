@@ -2,7 +2,6 @@ package com.example.julen.nativeappsproject.encription
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -66,13 +65,11 @@ class EncryptionServices(private val context: Context) {
 
     private fun encryptWithAndroidSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreSymmetricKey(MASTER_KEY)
-        Log.d("TAG", masterKey.toString())
         return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).encrypt(data, masterKey, true)
     }
 
     private fun decryptWithAndroidSymmetricKey(data: String): String {
         val masterKey = keyStoreManager.getAndroidKeyStoreSymmetricKey(MASTER_KEY)
-        Log.d("TAG", masterKey.toString())
         return CipherManager(CipherManager.TRANSFORMATION_SYMMETRIC).decrypt(data, masterKey, true)
     }
 

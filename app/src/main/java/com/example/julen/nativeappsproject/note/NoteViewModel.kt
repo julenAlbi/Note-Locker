@@ -34,10 +34,9 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
 
     internal val toastMessage = SingleLiveEvent<String>()
 
-    private lateinit var noteRepo: NoteRepository
+    private var noteRepo: NoteRepository
 
     init {
-
         if(noteSelected != null){
             this.note.value = noteSelected
         }

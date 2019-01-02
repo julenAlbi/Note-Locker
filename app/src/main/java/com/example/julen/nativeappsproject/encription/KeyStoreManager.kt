@@ -31,10 +31,6 @@ class KeyStoreManager(private val context: Context) {
         return keyStore
     }
 
-    fun createMasterKey(master_key: String){
-
-    }
-
     fun generateDefaultSymmetricKey(): SecretKey {
         val keyGenerator = KeyGenerator.getInstance("AES")
         return keyGenerator.generateKey()
