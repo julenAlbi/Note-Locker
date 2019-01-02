@@ -25,6 +25,7 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
     var note = MutableLiveData <Note>()
     var enes = MutableLiveData <Boolean>()
     var esen = MutableLiveData <Boolean>()
+    var progressBarVisivility = MutableLiveData <Int>()
 
     /**
      * Represents a disposable resources
@@ -43,6 +44,7 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
         noteRepo = NoteRepository(application)
         esen.value = true
         enes.value = false
+        progressBarVisivility.value = View.INVISIBLE
     }
 
     fun update(){
@@ -85,7 +87,6 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
             200 -> {
                 note.value!!.secret = result.text.get(0)
                 note.postValue(note.value!!)
-                toastMessage.value = "fipaoeuwhnu"
             }
             401 -> {
                 Log.d(TRANSLATE_ERROR, "Invalid API key")
@@ -115,11 +116,11 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
     }
 
     private fun onTranslateFinished() {
-
+        progressBarVisivility.value = View.INVISIBLE
     }
 
     private fun onTranslateStart() {
-
+        progressBarVisivility.value = View.VISIBLE
     }
 
     /**
