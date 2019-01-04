@@ -16,6 +16,12 @@ import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
 import com.example.julen.nativeappsproject.encription.EncryptionServices
 import com.example.julen.nativeappsproject.model.Note
 
+/**
+ * This [Fragment] is used to display the content of a note.
+ *
+ * @property noteViewModel i the viewmodel that is used by this fragment
+ * @property fragmenCommunication is the interface whereby this fragment communicates with its activity.
+ */
 class NoteFragment : Fragment() {
 
 
@@ -23,17 +29,27 @@ class NoteFragment : Fragment() {
 
     var fragmenCommunication : FragmentCommunication? = null
 
+    /**
+     * When the fragment is created, with [setHasOptionsMenu] it is possible to use the toolbar menu.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
+    /**
+     * This function gives a value to [fragmenCommunication]
+     */
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val acti = context as Activity
         fragmenCommunication = acti as FragmentCommunication
     }
 
+    /**
+     * Performs an action when menu [item] is selected. In [NoteFragment] case, the user maybe wants
+     * to edit the note or to delete the note.
+     */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_edit -> {
@@ -67,6 +83,7 @@ class NoteFragment : Fragment() {
             }
         }
 
+        //Decrypt note
         note?.let { if(note!!.locked) note!!.secret = EncryptionServices(context!!).decrypt(note!!.secret) }
 
 

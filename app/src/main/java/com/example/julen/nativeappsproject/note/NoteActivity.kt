@@ -7,10 +7,18 @@ import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.activity_note_fragment.*
 
+/**
+ * In this activity will be displayed [NoteFragment] and [AddNoteFragment].
+ *
+ * @property mode represents if the user is viewing a note ([VIEW_NOTE]), adding a new note ([ADD_NOTE])
+ * or editing a note([EDIT_NOTE])
+ */
 class NoteActivity : AppCompatActivity(), FragmentCommunication {
 
+    /**
+     * It overrides the interface [FragmentCommunication] in order to change the fragments.
+     */
     override fun changeFragment() {
-
         mode = if(mode == ADD_NOTE || mode == EDIT_NOTE) VIEW_NOTE else EDIT_NOTE
         val FragmentToDisplay = if(mode == EDIT_NOTE)
             AddNoteFragment.newInstance()
@@ -22,6 +30,9 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         invalidateOptionsMenu()
     }
 
+    /**
+     * Constant to manage the modes.
+     */
     companion object {
         const val ADD_NOTE = "add_note"
         const val VIEW_NOTE = "view_note"
@@ -46,8 +57,6 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-
-
             val FragmentToDisplay = if(mode == ADD_NOTE || mode == EDIT_NOTE)
                 AddNoteFragment.newInstance(intent.getSerializableExtra(NoteFragment.ARG_NOTE) as Note)
             else
@@ -65,6 +74,9 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         return true
     }
 
+    /**
+     * Makes visible the menu items.
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.note_menu,menu)
         if(mode == ADD_NOTE || mode == EDIT_NOTE){

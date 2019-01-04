@@ -1,25 +1,21 @@
 package com.example.julen.nativeappsproject.authentication
 
-import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatDialogFragment
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.julen.nativeappsproject.R
-import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.dialogfragment.*
 
 /**
  * This class will display a authentication dialog.
  */
-
 class AuthenticationDialog() : AppCompatDialogFragment() {
 
     //This lambda function contains a function to verify the password.
     var passwordVerificationListener: ((password : String) -> Boolean)? = null
+    //This lambda function contains a function to execute when the password entered is correct.
     var authenticationSuccessListener: ( () -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

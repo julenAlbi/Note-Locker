@@ -8,6 +8,17 @@ import org.joda.time.DateTime
 import java.io.Serializable
 import com.example.julen.nativeappsproject.Converter
 
+/**
+ * Note data class representing a note.
+ *
+ * @property id The id of the note
+ * @property alias The alias or the title of the note
+ * @property secret The content of the note
+ * @property createDate The date of the creation of the note
+ * @property updateDate The date of the last update of the note
+ * @property locked A boolean property that indicates whether the note must be encrypted or not. if it is locked,
+ * it is necessary to write the password before open the note, otherwise not
+ */
 @Entity
 data class Note(
         @ColumnInfo(name="id")
@@ -24,4 +35,7 @@ data class Note(
         @ColumnInfo(name="update_date")
         var updateDate: DateTime = DateTime.now(),
         @ColumnInfo(name="locked")
-        var locked: Boolean = false) : Serializable
+        var locked: Boolean = false) : Serializable{
+        override fun toString(): String = "Alias: " + alias + "\nNote: " + secret + "\nCretion Date: " + createDate.toString("dd/MM/yyyy") +
+                "\nUpdate date: " + updateDate.toString("dd/MM/yyyy") + "\nLocked: " + locked.toString()
+}

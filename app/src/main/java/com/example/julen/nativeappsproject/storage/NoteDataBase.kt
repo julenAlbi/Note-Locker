@@ -8,7 +8,9 @@ import android.content.Context
 import com.example.julen.nativeappsproject.Converter
 import com.example.julen.nativeappsproject.model.Note
 
-
+/**
+ * The database to store [Note]
+ */
 @Database(entities = [(Note::class)], version = 1)
 @TypeConverters(Converter::class)
 abstract class NoteDataBase : RoomDatabase() {

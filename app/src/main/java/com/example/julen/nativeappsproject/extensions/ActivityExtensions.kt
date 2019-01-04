@@ -10,7 +10,9 @@ import com.example.julen.nativeappsproject.note.NoteActivity
 import com.example.julen.nativeappsproject.note.NoteFragment
 import com.example.julen.nativeappsproject.note.NoteListActivity
 
-
+/**
+ * Here there are some Activity extension functions to support the creation of new activities.
+ */
 fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java, clearTask = true)
 
 fun Activity.startSignUpActivity() = startActivity(SignUpActivity::class.java, clearTask = true)

@@ -17,6 +17,18 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+/**
+ * It is a viewmodel, subclass of [InjectedViewModel].
+ *
+ * @property translateAPI instance of the TranslateApi class to get back the results of the API
+ * @property note
+ * @property enes boolean: indicates if the translation is from english to spanish
+ * @property esen boolean: indicates if the translation is from spanish to english
+ * @property progressBarVisivility boolean: if the progress bar is visible. It is visible when the note is translating
+ * @property subscription represents a disposable resources
+ * @property toastMessage it is used to send toast message
+ * @property noteRepo repository to communicate with the database
+ */
 class NoteViewModel(noteSelected : Note?, val application: Application) : InjectedViewModel() {
 
     @Inject
@@ -27,9 +39,6 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
     var esen = MutableLiveData <Boolean>()
     var progressBarVisivility = MutableLiveData <Int>()
 
-    /**
-     * Represents a disposable resources
-     */
     private lateinit var subscription: Disposable
 
     internal val toastMessage = SingleLiveEvent<String>()
@@ -58,6 +67,9 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
         noteRepo.deleteNote(note.value!!)
     }
 
+    /**
+     * Makes the request to the api to do the translation
+     */
     fun onTranslateButtonClicked(button: View){
         val direction : String
         if(esen.value!!){
@@ -76,10 +88,16 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
                 )
     }
 
+    /**
+     * If an error happened during the request to the api, this method will log the error
+     */
     private fun onTranslateError(error: Throwable) {
         Log.e(TRANSLATE_ERROR , error.message!!)
     }
 
+    /**
+     * Manages the response of the translation api
+     */
     private fun onTranslateSuccess(result: NoteTranslate){
 
         when(result.code){
@@ -114,10 +132,16 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
         }
     }
 
+    /**
+     * When the translation request is finished, the progress bar becomes invisible
+     */
     private fun onTranslateFinished() {
         progressBarVisivility.value = View.INVISIBLE
     }
 
+    /**
+     * When the translation request starts, the progress bar becomes visible
+     */
     private fun onTranslateStart() {
         progressBarVisivility.value = View.VISIBLE
     }

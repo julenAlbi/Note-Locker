@@ -6,7 +6,7 @@ import com.example.julen.nativeappsproject.model.Note
 import org.jetbrains.anko.doAsync
 
 /**
- * A repository which can be used to access data. It provides an abstraction layout betweeb the different data sources and the rest of the app.
+ * A repository which can be used to access data. It provides an abstraction layout between the different data sources and the rest of the app.
  * @param application Application object that it is needed to instantiate the database.
  * @constructor gets the Dao of the database and instantiates LiveData of all notes.
  */

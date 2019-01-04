@@ -15,8 +15,22 @@ import com.example.julen.nativeappsproject.storage.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
+/**
+ * This activity shows the list of the notes (recyclerview) and a floating action button to add a new note.
+ *
+ * @property noteRepo repository to communicate with the database.
+ * @property twoPane indicates if the activity is on two pane mode. If the density of the screen is higher than 900dp,
+ * [twoPane] will be true, and the notes are going to display and edit in the same activity, at the right side of the screen.
+ * That means that the [AddNoteFragment] and [NoteFragment] will be displayed in this activity.
+ * @property twoPaneMode represents the mode of the activity if it is on two pane mode. If the user wants to edit or add a note
+ * ([AddNoteFragment]), the value of [twoPaneMode] will be [NoteActivity.EDIT_NOTE] or [NoteActivity.ADD_NOTE]. If the user wants
+ * to see a note ([NoteFragment]), the value of [twoPaneMode] will be [NoteActivity.VIEW_NOTE].
+ */
 class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
+    /**
+     * It overrides the interface [FragmentCommunication] in order to change the fragments.
+     */
     override fun changeFragment() {
         twoPaneMode = if(twoPaneMode.equals(NoteActivity.ADD_NOTE) || twoPaneMode.equals(NoteActivity.EDIT_NOTE)){
             NoteActivity.VIEW_NOTE
@@ -84,8 +98,15 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         toolbar.title = title
         note_list.adapter = NoteListAdapter(twoPane)
         note_list.layoutManager = LinearLayoutManager(this)
+        /**
+         * Lambda implementaions for the recyclerview's adapter.
+         *
+         * If the activity is running on twoPane mode, a fragment will be displayed ([NoteListAdapter.showNoteFragment]),
+         * else, new activitiy will be created ([NoteListAdapter.showNoteActivity])
+         */
         (note_list.adapter as NoteListAdapter).showNoteActivity = { note ->
             if(note.locked){
+                //If the note is locked, needs password to decrypt the note
                 val authDialog = AuthenticationDialog()
                 authDialog.passwordVerificationListener = {validatePassword(it)}
                 authDialog.authenticationSuccessListener = {startNoteActivity(note, NoteActivity.VIEW_NOTE)}
@@ -95,9 +116,9 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
             }
         }
         (note_list.adapter as NoteListAdapter).showNoteFragment = { note ->
-
             twoPaneMode = NoteActivity.VIEW_NOTE
             if(note.locked){
+                //If the note is locked, needs password to decrypt the note
                 val authDialog = AuthenticationDialog()
                 authDialog.passwordVerificationListener = {validatePassword(it)}
                 authDialog.authenticationSuccessListener = {
@@ -119,6 +140,12 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
 
     }
 
+    /**
+     * Makes visible menu items.
+     *
+     * If the activity is on twoPane mode, the menu menu items will be visible, depending on if the user
+     * is seeing a note or editing a note.
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         twoPaneMode?.let {
             menuInflater.inflate(R.menu.note_menu,menu)
@@ -131,7 +158,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
             }
             return true
         }
-        return false //return false if nothing is done
+        return false //returns false if nothing is done
     }
 
     /**

@@ -9,10 +9,22 @@ import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.model.Note
 import kotlinx.android.synthetic.main.note_list_content.view.*
 
+/**
+ * An adapter for a recyclerview that contains notes.
+ * @property twoPane means if the app is running in two pane mode.
+ * @property onClickListener a listener to specify what to do when an item is selected.
+ * @property showNoteFragment a lambda function that is implemented by activity, it is used to show
+ * the [NoteFragment] at the right of the screen.
+ * @property showNoteActivity a lambda function that is implemented by activity, it is used to launch
+ * [NoteActivity] activity.
+ * @property notes to display in the recyclerview.
+ * @constructor implements the listener for the [onClickListener]
+ */
 class NoteListAdapter(private val twoPane: Boolean) :
         RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
+
     var showNoteFragment: ((note: Note) -> Unit)? = null
     var showNoteActivity: ((note: Note) -> Unit)? = null
 
@@ -30,6 +42,9 @@ class NoteListAdapter(private val twoPane: Boolean) :
         }
     }
 
+    /**
+     * Sets [newnotes] to the [notes] property and uses [notifyDataSetChanged] to update the list.
+     */
     fun setNotes(newnotes : List<Note>){
         this.notes = newnotes
         notifyDataSetChanged()
@@ -41,6 +56,9 @@ class NoteListAdapter(private val twoPane: Boolean) :
         return ViewHolder(view)
     }
 
+    /**
+     * Binds some [note] properties to the item.
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         notes.let{
             val note = notes!![position]
