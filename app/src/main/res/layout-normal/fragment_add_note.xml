@@ -93,61 +93,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayoutTranslate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/translateLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingLeft="10dp"
-                android:text="Translate:" />
-
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:checkedButton="@+id/esen">
-
-                <RadioButton
-                    android:id="@+id/esen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="@={noteViewModel.esen}"
-                    android:text="es-en" />
-
-                <RadioButton
-                    android:id="@+id/enes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="@={noteViewModel.enes}"
-                    android:text="en-es" />
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/translateButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:onClick="@{noteViewModel::onTranslateButtonClicked}"
-                android:text="Translate" />
-
-        </LinearLayout>
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

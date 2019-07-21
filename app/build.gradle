@@ -41,6 +41,7 @@ dependencies {
     def rx_version = '2.2.3'
     def rxandroid_version = '2.1.0'
     def okhttp_version = '3.11.0'
+    def joda_version = '2.10.2'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -52,7 +53,9 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
 
     implementation 'com.android.support:design:28.0.0'
-    compile "com.github.debop:koda-time:1.2.1"
+
+    //joda
+    implementation "net.danlew:android.joda:$joda_version"
 
     //CardView
     implementation 'com.android.support:cardview-v7:28.0.0'
@@ -91,9 +94,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     testImplementation "android.arch.persistence.room:testing:$room_version"
-    kapt "android.arch.lifecycle:compiler:1.1.0"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
     androidTestImplementation 'com.android.support.test:rules:1.0.2'

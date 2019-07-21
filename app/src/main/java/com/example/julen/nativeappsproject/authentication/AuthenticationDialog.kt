@@ -19,7 +19,7 @@ class AuthenticationDialog() : AppCompatDialogFragment() {
     var authenticationSuccessListener: ( () -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.dialogfragment, container, false)
+        return inflater.inflate(R.layout.dialogfragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

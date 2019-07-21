@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
 import android.view.View
-import com.example.julen.nativeappsproject.base.InjectedViewModel
 import com.example.julen.nativeappsproject.model.Note
 import com.example.julen.nativeappsproject.model.NoteTranslate
 import com.example.julen.nativeappsproject.storage.NoteRepository
@@ -18,25 +17,17 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
- * It is a viewmodel, subclass of [InjectedViewModel].
+ * It is a viewmodel.
  *
- * @property translateAPI instance of the TranslateApi class to get back the results of the API
  * @property note
- * @property enes boolean: indicates if the translation is from english to spanish
- * @property esen boolean: indicates if the translation is from spanish to english
  * @property progressBarVisivility boolean: if the progress bar is visible. It is visible when the note is translating
  * @property subscription represents a disposable resources
  * @property toastMessage it is used to send toast message
  * @property noteRepo repository to communicate with the database
  */
-class NoteViewModel(noteSelected : Note?, val application: Application) : InjectedViewModel() {
-
-    @Inject
-    lateinit var translateAPI: TranslateAPI
+class NoteViewModel(noteSelected : Note?, val application: Application): ViewModel() {
 
     var note = MutableLiveData <Note>()
-    var enes = MutableLiveData <Boolean>()
-    var esen = MutableLiveData <Boolean>()
     var progressBarVisivility = MutableLiveData <Int>()
 
     private lateinit var subscription: Disposable
@@ -50,8 +41,6 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
             this.note.value = noteSelected
         }
         noteRepo = NoteRepository(application)
-        esen.value = true
-        enes.value = false
         progressBarVisivility.value = View.INVISIBLE
     }
 
@@ -65,95 +54,6 @@ class NoteViewModel(noteSelected : Note?, val application: Application) : Inject
 
     fun delete(){
         noteRepo.deleteNote(note.value!!)
-    }
-
-    /**
-     * Makes the request to the api to do the translation
-     */
-    fun onTranslateButtonClicked(button: View){
-        val direction : String
-        if(esen.value!!){
-            direction = DIRECT_ESEN
-        }else{
-            direction = DIRECT_ENES
-        }
-        subscription = translateAPI.translateRequest(KEY_API, note.value!!.secret, direction)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { onTranslateStart() }
-                .doOnTerminate{ onTranslateFinished() }
-                .subscribe(
-                        {result -> onTranslateSuccess(result)},
-                        {error -> onTranslateError(error)}
-                )
-    }
-
-    /**
-     * If an error happened during the request to the api, this method will log the error
-     */
-    private fun onTranslateError(error: Throwable) {
-        Log.e(TRANSLATE_ERROR , error.message!!)
-    }
-
-    /**
-     * Manages the response of the translation api
-     */
-    private fun onTranslateSuccess(result: NoteTranslate){
-
-        when(result.code){
-            200 -> {
-                note.value!!.secret = result.text.get(0)
-                note.postValue(note.value!!)
-            }
-            401 -> {
-                Log.d(TRANSLATE_ERROR, "Invalid API key")
-                toastMessage.value = "Invalid API key"
-            }
-            402 -> {
-                Log.d(TRANSLATE_ERROR, "Blocked API key")
-                toastMessage.value = "Blocked API key"
-            }
-            404 -> {
-                Log.d(TRANSLATE_ERROR, "Exceeded the daily limit on the amount of translated text")
-                toastMessage.value = "Exceeded the daily limit on the amount of translated text"
-            }
-            413 -> {
-                Log.d(TRANSLATE_ERROR, "Exceeded the maximum text size")
-                toastMessage.value = "Exceeded the maximum text size"
-            }
-            422 -> {
-                Log.d(TRANSLATE_ERROR, "The text cannot be translated")
-                toastMessage.value = "The text cannot be translated"
-            }
-            501 -> {
-                Log.d(TRANSLATE_ERROR, "The specified translation direction is not supported")
-                toastMessage.value = "The specified translation direction is not supported"
-            }
-        }
-    }
-
-    /**
-     * When the translation request is finished, the progress bar becomes invisible
-     */
-    private fun onTranslateFinished() {
-        progressBarVisivility.value = View.INVISIBLE
-    }
-
-    /**
-     * When the translation request starts, the progress bar becomes visible
-     */
-    private fun onTranslateStart() {
-        progressBarVisivility.value = View.VISIBLE
-    }
-
-    /**
-     * Disposes the subscription when the [InjectedViewModel] is no longer used.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        if (::subscription.isInitialized){
-            subscription.dispose()
-        }
     }
 }
 
