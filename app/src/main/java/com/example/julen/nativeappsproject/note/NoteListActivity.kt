@@ -1,10 +1,13 @@
 package com.example.julen.nativeappsproject.note
 
 import android.arch.lifecycle.Observer
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
@@ -61,24 +64,34 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
     }
     private var twoPaneMode: String? =  null
 
+    /**
+     * Performs an action when menu [item] is selected. In [AddNoteFragment] case, the user maybe wants
+     * to save the note or to delete the note.
+     */
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.action_add_note -> {
+                if (twoPane) {
+                    twoPaneMode = NoteActivity.ADD_NOTE
+                    val fragment = AddNoteFragment.newInstance(Note(0, "", ""))
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.noteFrame, fragment)
+                            .commit()
+                } else {
+                    startNoteActivity(mode = NoteActivity.ADD_NOTE)
+                }
+                return true
+            }
+        }
+        return false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
         setSupportActionBar(toolbar)
-        this.title = "Notes" //Cannot set title to toolbar
-
-        addSecretButton.setOnClickListener {
-            if(twoPane){
-                twoPaneMode = NoteActivity.ADD_NOTE
-                val fragment = AddNoteFragment.newInstance(Note(0,"",""))
-                supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.noteFrame, fragment)
-                        .commit()
-            }else{
-                startNoteActivity(mode = NoteActivity.ADD_NOTE)
-            }
-        }
+//        this.title = "Notes" //Cannot set title to toolbar
 
         if (noteFrame != null) {
             // The detail container view will be present only in the
@@ -148,15 +161,23 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
      * is seeing a note or editing a note.
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.note_menu,menu)
         twoPaneMode?.let {
-            menuInflater.inflate(R.menu.note_menu,menu)
             if(it == NoteActivity.ADD_NOTE || it == NoteActivity.EDIT_NOTE){
                 menu?.findItem(R.id.action_save)?.isVisible = true
                 menu?.findItem(R.id.action_edit)?.isVisible = false
+                menu?.findItem(R.id.action_add_note)?.isVisible = false
             }else{
                 menu?.findItem(R.id.action_edit)?.isVisible = true
                 menu?.findItem(R.id.action_save)?.isVisible = false
+                menu?.findItem(R.id.action_add_note)?.isVisible = true
             }
+            return true
+        } ?: run{
+            menu?.findItem(R.id.action_add_note)?.isVisible = true
+            menu?.findItem(R.id.action_edit)?.isVisible = false
+            menu?.findItem(R.id.action_save)?.isVisible = false
+            menu?.findItem(R.id.action_delete)?.isVisible = false
             return true
         }
         return false //returns false if nothing is done

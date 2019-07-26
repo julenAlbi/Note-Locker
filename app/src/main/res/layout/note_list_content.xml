@@ -6,10 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="70dp"
     android:layout_margin="8dp"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="5dp">
+    card_view:cardElevation="5dp"
+    app:cardBackgroundColor="@color/color1">
 
     <TextView
         android:id="@+id/NoteTitle"
@@ -18,7 +18,8 @@
         android:layout_marginLeft="8dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        tools:text="@tools:sample/lorem" />
+        tools:text="@tools:sample/lorem"
+        android:textColor="@color/color5"/>
 
     <TextView
         android:id="@+id/lockedIcon"
@@ -26,10 +27,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:fontFamily="@font/fasolid900"
         android:text="\uf023"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/unlockedIcon"
@@ -37,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:fontFamily="@font/fasolid900"
         android:text="\uf3c1"
         android:textSize="20sp"
@@ -57,14 +60,16 @@
             android:layout_width="wrap_content"
             android:layout_height="?android:attr/listPreferredItemPaddingLeft"
             android:text="TextView"
-            tools:text="@tools:sample/date/ddmmyy" />
+            tools:text="@tools:sample/date/ddmmyy"
+            android:textColor="@color/color5"/>
 
         <TextView
             android:id="@+id/LastEditedDate"
             android:layout_width="wrap_content"
             android:layout_height="?android:attr/listPreferredItemPaddingLeft"
             android:text="TextView"
-            tools:text="@tools:sample/date/ddmmyy" />
+            tools:text="@tools:sample/date/ddmmyy"
+            android:textColor="@color/color5"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

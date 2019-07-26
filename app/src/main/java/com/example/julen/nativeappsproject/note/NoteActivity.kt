@@ -82,9 +82,11 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         if(mode == ADD_NOTE || mode == EDIT_NOTE){
             menu?.findItem(R.id.action_save)?.isVisible = true
             menu?.findItem(R.id.action_edit)?.isVisible = false
+            menu?.findItem(R.id.action_add_note)?.isVisible = false
         }else{
             menu?.findItem(R.id.action_edit)?.isVisible = true
             menu?.findItem(R.id.action_save)?.isVisible = false
+            menu?.findItem(R.id.action_add_note)?.isVisible = false
         }
         return true
     }
