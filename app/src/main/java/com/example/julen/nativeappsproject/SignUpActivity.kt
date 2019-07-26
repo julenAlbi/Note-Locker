@@ -29,7 +29,8 @@ class SignUpActivity : AppCompatActivity() {
                 startHomeActivity()
             }else{
                 notSamePasswords()
-            }}
+            }
+        }
     }
 
     /**

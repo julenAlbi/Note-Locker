@@ -65,6 +65,7 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
         setSupportActionBar(toolbar)
+        this.title = "Notes" //Cannot set title to toolbar
 
         addSecretButton.setOnClickListener {
             if(twoPane){
