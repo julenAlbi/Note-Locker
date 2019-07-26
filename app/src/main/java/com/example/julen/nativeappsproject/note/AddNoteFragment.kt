@@ -8,6 +8,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,7 +17,9 @@ import android.widget.Toast
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentAddNoteBinding
 import com.example.julen.nativeappsproject.encription.EncryptionServices
+import com.example.julen.nativeappsproject.extensions.toast
 import com.example.julen.nativeappsproject.model.Note
+import kotlinx.android.synthetic.main.fragment_add_note.*
 
 /**
  * This [Fragment] is used to edit or add a new note.
@@ -59,8 +62,12 @@ class AddNoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_save -> {
-                saveNote()
-                fragmenCommunication?.changeFragment()
+                if(noteName.text.length == 0){
+                    context!!.toast("Note name cannot bee empty")
+                }else{
+                    saveNote()
+                    fragmenCommunication?.changeFragment()
+                }
                 return true
             }
             R.id.action_delete -> {
