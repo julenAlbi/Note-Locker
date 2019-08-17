@@ -30,55 +30,22 @@
                 android:text="@{noteViewModel.note.alias}"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_dark"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/createdDateLabel"
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Created date:" />
-
-                <TextView
-                    android:id="@+id/createdDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text='@{noteViewModel.note.createDate.toString("dd/MM/yyyy")}' />
-
-                <TextView
-                    android:id="@+id/updatedDateLabel"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Last updated:" />
-
-                <TextView
-                    android:id="@+id/updatedDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text='@{noteViewModel.note.updateDate.toString("dd/MM/yyyy")}'/>
-            </LinearLayout>
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/notetext"
+                android:background="@drawable/edittextshape"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@drawable/back"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
                 android:ems="10"
                 android:gravity="top"
                 android:padding="10dp"
                 android:text="@{noteViewModel.note.secret}" />
-
-
         </LinearLayout>
     </FrameLayout>
 </layout>

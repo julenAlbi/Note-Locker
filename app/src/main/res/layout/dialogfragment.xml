@@ -26,7 +26,9 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/color4"
+        android:backgroundTint="@color/color4"/>
 
 
     <LinearLayout
@@ -40,6 +42,7 @@
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color4"
             android:text="@string/cancel" />
 
         <Button
@@ -47,6 +50,7 @@
             style="?attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color4"
             android:text="@string/ok" />
     </LinearLayout>
 

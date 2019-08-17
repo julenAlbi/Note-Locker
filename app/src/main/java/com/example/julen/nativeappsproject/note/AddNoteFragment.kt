@@ -63,7 +63,7 @@ class AddNoteFragment : Fragment() {
         when(item?.itemId){
             R.id.action_save -> {
                 if(noteName.text.length == 0){
-                    context!!.toast("Note name cannot bee empty")
+                    context!!.toast("Note name cannot be empty")
                 }else{
                     saveNote()
                     fragmenCommunication?.changeFragment()
