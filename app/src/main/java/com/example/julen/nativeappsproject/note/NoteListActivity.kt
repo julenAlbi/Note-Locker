@@ -11,6 +11,7 @@ import android.view.MenuItem
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.authentication.AuthenticationDialog
 import com.example.julen.nativeappsproject.encription.EncryptionServices
+import com.example.julen.nativeappsproject.extensions.startChangePasswordActivity
 import com.example.julen.nativeappsproject.extensions.startNoteActivity
 import com.example.julen.nativeappsproject.model.Note
 import com.example.julen.nativeappsproject.storage.NoteRepository
@@ -81,6 +82,10 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
                 } else {
                     startNoteActivity(mode = NoteActivity.ADD_NOTE)
                 }
+                return true
+            }
+            R.id.action_change_password -> {
+                startChangePasswordActivity()
                 return true
             }
         }
@@ -172,9 +177,11 @@ class NoteListActivity : AppCompatActivity(), FragmentCommunication {
                 menu?.findItem(R.id.action_save)?.isVisible = false
                 menu?.findItem(R.id.action_add_note)?.isVisible = true
             }
+            menu?.findItem(R.id.action_change_password)?.isVisible = true
             return true
         } ?: run{
             menu?.findItem(R.id.action_add_note)?.isVisible = true
+            menu?.findItem(R.id.action_change_password)?.isVisible = true
             menu?.findItem(R.id.action_edit)?.isVisible = false
             menu?.findItem(R.id.action_save)?.isVisible = false
             menu?.findItem(R.id.action_delete)?.isVisible = false

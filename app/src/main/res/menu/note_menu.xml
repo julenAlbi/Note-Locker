@@ -18,10 +18,18 @@
         android:icon="@drawable/ic_edit_black_24dp"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
+
     <item android:id="@+id/action_add_note"
-        android:title="Add note"
+        android:title="@string/add_note"
         android:icon="@drawable/ic_add_white"
         android:orderInCategory="101"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_change_password"
+        android:orderInCategory="102"
+        android:title="@string/change_password"
+        android:visible="false"
+        app:showAsAction="never" />
 
 </menu>

@@ -14,7 +14,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:text="@string/authentication_password_description"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="@color/color4"/>
 
     <EditText
         android:id="@+id/password"

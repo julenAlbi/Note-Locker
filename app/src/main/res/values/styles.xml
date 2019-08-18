@@ -11,6 +11,17 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <style name="popupMenu" parent="AppTheme.PopupOverlay">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color3</item>
+        <item name="colorPrimaryDark">@color/color4</item>
+        <item name="colorAccent">@color/color2</item>
+        <item name="android:textColorSecondary">@color/color4</item>
+        <item name="android:textColor">@color/color4</item>
+        <item name="android:textColorPrimary">@color/color4</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
     <style name="AuthenticationDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowFixedWidthMinor">90%</item>

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import com.example.julen.nativeappsproject.ChangePassword
 import com.example.julen.nativeappsproject.SignUpActivity
 import com.example.julen.nativeappsproject.model.Note
 import com.example.julen.nativeappsproject.note.NoteActivity
@@ -16,6 +17,8 @@ import com.example.julen.nativeappsproject.note.NoteListActivity
 fun Activity.startHomeActivity() = startActivity(NoteListActivity::class.java, clearTask = true)
 
 fun Activity.startSignUpActivity() = startActivity(SignUpActivity::class.java, clearTask = true)
+
+fun Activity.startChangePasswordActivity() = startActivity(ChangePassword::class.java)
 
 fun Activity.startNoteActivity(note : Note? = null, mode : String){
     var notee = if(mode.equals(NoteActivity.ADD_NOTE)) Note(0,"","") else note

@@ -7,6 +7,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import com.example.julen.nativeappsproject.R
 import com.example.julen.nativeappsproject.databinding.FragmentNoteBinding
 import com.example.julen.nativeappsproject.encription.EncryptionServices
+import com.example.julen.nativeappsproject.encription.KeyStoreManager
 import com.example.julen.nativeappsproject.model.Note
 
 /**
@@ -85,7 +87,6 @@ class NoteFragment : Fragment() {
 
         //Decrypt note
         note?.let { if(note!!.locked) note!!.secret = EncryptionServices(context!!).decrypt(note!!.secret) }
-
 
         //When geting the viewmodel from the store we not only specify the class but also the note.
         //The note can be null, that's because if it is a fragment change (from [AddNoteFragment] to [NoteFragment]),

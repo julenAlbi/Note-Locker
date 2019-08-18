@@ -69,6 +69,7 @@ class NoteActivity : AppCompatActivity(), FragmentCommunication {
         }
     }
 
+    //For back button
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

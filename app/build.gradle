@@ -29,7 +29,7 @@ android {
         outputFormat = 'html'
         outputDirectory = "$buildDir/javadoc"
     }
-    dataBinding { enabled= true}
+    dataBinding { enabled = true }
 }
 
 dependencies {
@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     kapt "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
 
     implementation 'com.android.support:design:28.0.0'
